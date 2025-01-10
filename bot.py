@@ -3926,6 +3926,7 @@ async def viewAchievements(ctx, user: discord.User = None):
     # Get all achievements from master list
     with open('utils/trainlogger/achievements/achievements.csv', 'r', newline='') as file:
         reader = csv.reader(file)
+        rowcount = 0
         for row in reader:
             if row:  # Skip empty rows
                 achievement_id = row[0]
@@ -3937,6 +3938,9 @@ async def viewAchievements(ctx, user: discord.User = None):
                     embed.add_field(name=f"✅ {name}", value=description, inline=False)
                 else:
                     embed.add_field(name=f"❌ {name}", value=description, inline=False)
+                rowcount = rowcount + 1
+            if rowcount == 25:
+                break
 
     await ctx.edit_original_response(embed=embed)
 
