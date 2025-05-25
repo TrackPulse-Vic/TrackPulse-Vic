@@ -27,7 +27,7 @@ def addTrain(username, set, date, train_type, line, start, end, note, userid=Non
     cursor.execute(f'''
             INSERT INTO logs (user_id, og_id, set_number, train_type, date, line, start, end, notes, username)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (userid, 'NULL', set, train_type, date, line, start, end, note, str(username)))
+            ''', (userid, 'NULL', set, date, train_type, line, start, end, note, str(username))) # note: date and train type are swapped here due to a bug in the original code
 
     cursor.execute("SELECT last_insert_rowid()")
     id = cursor.fetchone()[0]
