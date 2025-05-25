@@ -113,6 +113,7 @@ from utils.rareTrain import *
 from utils.montagueAPI import *
 from utils.map.map import *
 from utils.game.lb import *
+from logconverter import convertLogsToDB
 
 # trainlogger imports
 from utils.trainlogger.achievements.check import awardAchievement, checkAchievements, checkGameAchievements, checkHangmanAchievements, getAchievementInfo
@@ -5935,6 +5936,24 @@ async def update(ctx):
             await ctx.send("You are not authorized to use this command.")
     else:
         await ctx.send("Remote updates are not enabled")
+
+@bot.command()
+async def convertlogs(ctx):
+    if ctx.author.id in admin_users:
+        for filename in os.listdir('utils/trainlogger/userdata'):
+            if filename.endswith('.csv'):
+                username = filename[:-4]
+                print(f"Converting logs for user: {username}")
+                member = discord.utils.find(lambda m: str(m) == username, ctx.guild.members)
+                if member:
+                    try:
+                        await convertLogsToDB(member.id, username)
+                        await ctx.send(f"Converted logs for user {username} ({member.id}).")
+                    except Exception as e:
+                        await ctx.send(f"Error converting logs for user {username}: {e}")
+                else:
+                    await ctx.send(f"Couldn't get id for user {username}, skipping conversion.")
+
         
 # thing to notify of errors:
 # @bot.event
