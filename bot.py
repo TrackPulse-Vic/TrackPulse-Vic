@@ -21,6 +21,7 @@ from numbers import Number
 import operator
 from shutil import ExecError
 import shutil
+import sqlite3
 from tracemalloc import stop
 from cycler import V
 from discord.ext import commands, tasks
@@ -3640,7 +3641,7 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
         if id != None:
             
             if mode == 'train':
-                file_path = f'utils/trainlogger/userdata/{userid.name}.csv'
+                file_path = 'userdata/trainlogs.db'
                 
             if mode == 'tram':
                 file_path = f'utils/trainlogger/userdata/tram/{userid.name}.csv'
@@ -3659,76 +3660,86 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
             if mode == 'perth-trains':
                 file_path = f'utils/trainlogger/userdata/perth-trains/{userid.name}.csv'   
                 
-            
-            
-            with open(file_path, mode='r', newline='') as file:
-                
-                if not id.startswith('#'):
-                    cleaned_id = '#' + id
-                else:
-                    cleaned_id = id
-                csv_reader = csv.reader(file)
-                for row in csv_reader:
-                    if row[0] == cleaned_id.upper():
-                        
-                        # thing to find image:
-                        if row[2] == 'Tait':
-                            image = 'https://railway-photos.xm9g.net/photos/317M-6.webp'
-                        
-                        if not '-' in row[1]:
-                            image = getImage(row[1])
+            # Connect to SQLite database
+            conn = sqlite3.connect(file_path)
+            cursor = conn.cursor()
 
-                        else:
-                            hyphen_index = row[1].find("-")
-                            if hyphen_index != -1:
-                                first_car = row[1][:hyphen_index]
-                                await printlog(f'First car: {first_car}')
-                                image = getImage(first_car)
-                                if image == None:
-                                    last_hyphen = row[1].rfind("-")
-                                    if last_hyphen != -1:
-                                        last_car = row[1][last_hyphen + 1 :]  # Use last_hyphen instead of hyphen_index
-                                        await printlog(f'Last car: {last_car}')
-                                        image = getImage(last_car)
-                                        if image == None:
-                                            image = getImage(row[2])
-                                            await printlog(f'the loco number is: {row[1]}')
+            # Query the database
+            cursor.execute("""
+                SELECT log_id, set_number, train_type, date, line, start, end, notes
+                FROM logs
+                WHERE log_id = ? AND user_id = ?
+            """, (id.upper(),userid.id))
+            
+            row = cursor.fetchone()
+
+            if row:
+                # Extract row data
+                og_id, set_number, train_type, date, line, start, end, notes = row
+
+                # Find image
+                image = None
+                if train_type == 'Tait':
+                    image = 'https://railway-photos.xm9g.net/photos/317M-6.webp'
+                
+                if not '-' in set_number:
+                    image = getImage(set_number)
+                else:
+                    hyphen_index = set_number.find("-")
+                    if hyphen_index != -1:
+                        first_car = set_number[:hyphen_index]
+                        await printlog(f'First car: {first_car}')
+                        image = getImage(first_car)
                         if image == None:
-                            # thing to find image:
-                            await printlog(f"Finding image for {row[2].replace('-Class','')}.{row[1]}")
-                            image = getTramImage(f'{row[2].replace("-Class","")}.{row[1]}')
-                                        
-                        # Make the embed
-                        if row[4] in vLineLines:
-                            embed = discord.Embed(title=f"Log {row[0]}",colour=vline_map_colour)
-                        elif row[4] == 'Unknown':
-                                embed = discord.Embed(title=f"Log {row[0]}")
-                        else:
-                            try:
-                                embed = discord.Embed(title=f"Log `{row[0]}`",colour=lines_dictionary_main[row[4]][1])
-                            except:
-                                embed = discord.Embed(title=f'Log `{id}`')
-                        embed.add_field(name=f'Set', value="{} ({})".format(row[1], row[2]))
-                        embed.add_field(name=f'Line', value="{}".format(row[4]))
-                        embed.add_field(name=f'Date', value="{}".format(row[3]))
-                        embed.add_field(name=f'Trip', value=f"{row[5]} to {row[6]}")
-                        if row[5] != 'N/A' and row[6] != 'N/A':
-                            if getStationDistance(load_station_data("utils/trainlogger/stationDistances.csv"), row[5], row[6]) != 'N/A':
-                                embed.add_field(name='Distance:', value=f'{round(getStationDistance(load_station_data("utils/trainlogger/stationDistances.csv"), row[5], row[6]))}km')
-                        try:
-                            if row[7]:
-                                embed.add_field(name='Notes:', value=row[7].strip('"'))
-                                
-                        except:
-                            pass
-                        try:
-                            embed.set_thumbnail(url=image)
-                        except:
-                            await printlog('no image')
-                        await ctx.response.send_message(embed=embed)
-                        return
-                # if there is no row with the id:
+                            last_hyphen = set_number.rfind("-")
+                            if last_hyphen != -1:
+                                last_car = set_number[last_hyphen + 1:]
+                                await printlog(f'Last car: {last_car}')
+                                image = getImage(last_car)
+                                if image == None:
+                                    image = getImage(train_type)
+                                    await printlog(f'the loco number is: {set_number}')
+                
+                if image == None:
+                    await printlog(f"Finding image for {train_type.replace('-Class','')}.{set_number}")
+                    image = getTramImage(f'{train_type.replace("-Class","")}.{set_number}')
+
+                # Create the embed
+                if line in vLineLines:
+                    embed = discord.Embed(title=f"Log {og_id}", colour=vline_map_colour)
+                elif line == 'Unknown':
+                    embed = discord.Embed(title=f"Log {og_id}")
+                else:
+                    try:
+                        embed = discord.Embed(title=f"Log `{og_id}`", colour=lines_dictionary_main[line][1])
+                    except:
+                        embed = discord.Embed(title=f'Log `{id}`')
+                
+                embed.add_field(name='Set', value=f"{set_number} ({train_type})")
+                embed.add_field(name='Line', value=f"{line}")
+                embed.add_field(name='Date', value=f"{date}")
+                embed.add_field(name='Trip', value=f"{start} to {end}")
+                
+                if start != 'N/A' and end != 'N/A':
+                    distance = getStationDistance(load_station_data("utils/trainlogger/stationDistances.csv"), start, end)
+                    if distance != 'N/A':
+                        embed.add_field(name='Distance:', value=f'{round(distance)}km')
+                
+                if notes:
+                    embed.add_field(name='Notes:', value=notes.strip('"'))
+                
+                try:
+                    embed.set_thumbnail(url=image)
+                except:
+                    await printlog('no image')
+                
+                await ctx.response.send_message(embed=embed)
+            else:
+                # If no row is found with the id
                 await ctx.response.send_message(f'Cannot find log `{id}`')
+
+            # Close the database connection
+            conn.close()
                 
         else:
             # for train
