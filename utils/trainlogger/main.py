@@ -1,5 +1,6 @@
 import csv
 import os
+import sqlite3
 import discord
 
 def hextodec(hexnum):
@@ -16,47 +17,24 @@ def is_hexadecimal(s):
          return False
    return True
 
-def addTrain(username, set, date, train_type, line, start, end, note):
-
-    # Create a CSV file named after the username
-    filename = f"utils/trainlogger/userdata/{username}.csv"
-    
-    if not os.path.exists(filename):
-        # Create the file if it does not exist
-        with open(filename, 'w') as file:
-            file.write('')  
-        print(f"File created: {filename}")
-    else:
-        print(f"File already exists: {filename}")
+def addTrain(username, set, date, train_type, line, start, end, note, userid=None):
+    conn = sqlite3.connect(f'userdata/trainlogs.db')
+    cursor = conn.cursor()
     
     if set.endswith('-'):
         set = set[:-1]
-
-    id = None
-
-    # Write the data to the CSV file
-    try:
-        os.listdir('utils\\trainlogger\\userdata')
-    except FileNotFoundError:
-        os.mkdir('utils/trainlogger/userdata')
-        id = 0
-
-    with open(filename, 'r+', newline='') as file:
-        data = file.readlines()
-        if data == []:
-            id = 0
-        else:
-            id = data[-1].split(',')[0][1:]
     
-    id = dectohex(hextodec(id)+1)
+    cursor.execute(f'''
+            INSERT INTO logs (user_id, og_id, set_number, train_type, date, line, start, end, notes, username)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (userid, 'NULL', set, train_type, date, line, start, end, note, str(username)))
+
+    cursor.execute("SELECT last_insert_rowid()")
+    id = cursor.fetchone()[0]
     
-    with open(filename, 'a', newline='') as file:
-        writer = csv.writer(file)
-        # file.write('\n')
-        writer.writerow([f'#{id}',set, date,train_type, line, start, end, note])
+    conn.commit()
+    conn.close()
 
-
-    print(f"Data saved to {filename}")
     return id
 
 # Tram version:

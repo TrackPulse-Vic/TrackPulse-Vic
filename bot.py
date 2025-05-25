@@ -2768,7 +2768,7 @@ async def logtrain(ctx, line:str, number:str, start:str, end:str, date:str='toda
             
         # Add train to the list
         print(f'adding {set} {type_final} {savedate} {line} {start.title()} {end.title()} {notes}')
-        id = addTrain(ctx.user.name, set, type_final, savedate, line, start.title(), end.title(), notes)
+        id = addTrain(ctx.user.name, set, type_final, savedate, line, start.title(), end.title(), notes, ctx.user.id)
         
         if line in vLineLines:
             embed = discord.Embed(title="Train Logged",colour=vline_map_colour)
@@ -2820,7 +2820,7 @@ async def logtrain(ctx, line:str, number:str, start:str, end:str, date:str='toda
         except Exception as e:
             await printlog(f"Error getting image: {e}")
 
-        embed.set_footer(text=f"Log ID #{id}")
+        embed.set_footer(text=f"Log {id}")
         
         
         
