@@ -3637,29 +3637,24 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
             await ctx.response.send_message('You cannot view other users logs.', ephemeral=True)
             return
             
-
+        if mode == 'train':
+            file_path = 'userdata/trainlogs.db'
+        if mode == 'tram':
+            file_path = f'utils/trainlogger/userdata/tram/{userid.name}.csv'
+        if mode == 'bus':
+            file_path = f'utils/trainlogger/userdata/bus/{userid.name}.csv'  
+        if mode == 'sydney-trains':
+            file_path = f'utils/trainlogger/userdata/sydney-trains/{userid.name}.csv'  
+        if mode == 'sydney-trams':
+            file_path = f'utils/trainlogger/userdata/sydney-trams/{userid.name}.csv' 
+        if mode == 'adelaide-trains':
+            file_path = f'utils/trainlogger/userdata/adelaide-trains/{userid.name}.csv'
+        if mode == 'adelaide-trams':
+            file_path = f'utils/trainlogger/userdata/adelaide-trams/{userid.name}.csv' 
+        if mode == 'perth-trains':
+            file_path = f'utils/trainlogger/userdata/perth-trains/{userid.name}.csv'   
+        
         if id != None:
-            
-            if mode == 'train':
-                file_path = 'userdata/trainlogs.db'
-                
-            if mode == 'tram':
-                file_path = f'utils/trainlogger/userdata/tram/{userid.name}.csv'
-            
-            if mode == 'bus':
-                file_path = f'utils/trainlogger/userdata/bus/{userid.name}.csv'  
-                
-            if mode == 'sydney-trains':
-                file_path = f'utils/trainlogger/userdata/sydney-trains/{userid.name}.csv'  
-            if mode == 'sydney-trams':
-                file_path = f'utils/trainlogger/userdata/sydney-trams/{userid.name}.csv' 
-            if mode == 'adelaide-trains':
-                file_path = f'utils/trainlogger/userdata/adelaide-trains/{userid.name}.csv'
-            if mode == 'adelaide-trams':
-                file_path = f'utils/trainlogger/userdata/adelaide-trams/{userid.name}.csv' 
-            if mode == 'perth-trains':
-                file_path = f'utils/trainlogger/userdata/perth-trains/{userid.name}.csv'   
-                
             # Connect to SQLite database
             conn = sqlite3.connect(file_path)
             cursor = conn.cursor()
@@ -3742,6 +3737,10 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
             conn.close()
                 
         else:
+            # Connect to SQLite database
+            conn = sqlite3.connect(file_path)
+            cursor = conn.cursor()
+           
             # for train
             if mode == 'train':
                 if user == None:
@@ -3749,15 +3748,18 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
                 else:
                     userid = user
                 
-                try:
-                    file = discord.File(f'utils/trainlogger/userdata/{userid.name}.csv')
-                except FileNotFoundError:
+                # read the db to see if theres any robs
+                cursor.execute("SELECT log_id, set_number, train_type, date, line, start, end, notes FROM logs WHERE user_id = ?", (userid.id,))
+                data = cursor.fetchall()
+                
+                if not data:
                     if userid == ctx.user:
-                        await ctx.response.send_message("You have no trains logged!",ephemeral=True)
+                        await ctx.response.send_message("You have no trains logged!", ephemeral=True)
                     else:
-                        await ctx.response.send_message("This user has no trains logged!",ephemeral=True)
+                        await ctx.response.send_message("This user has no trains logged!", ephemeral=True)
+                    conn.close()
                     return
-                await printlog(userid.name)
+                
                 data = readLogs(userid.name)
                 if data == 'no data':
                     if userid == ctx.user:
@@ -3783,7 +3785,7 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
                 embed.add_field(name='Click here to view your logs:', value=f'<#{logsthread.id}>')
                 embed.add_field(name='Click here to view your own logs on the website:', value=f'[Trackpulse Vic Website](https://discord.com/oauth2/authorize?client_id=1214144664513417218&redirect_uri=https%3A%2F%2Ftrackpulse.xm9g.net%2Flogs%2Fviewer&response_type=code&scope=identify)')
                 await ctx.response.send_message(embed=embed)
-                await logsthread.send(f'# <:train:1241164967789727744> {userid.name}\'s CSV file', file=file)
+                # await logsthread.send(f'# <:train:1241164967789727744> {userid.name}\'s CSV file', file=file)
                 await logsthread.send(f'# {userid.name}\'s Train Logs')
                 formatted_data = ""
                 for sublist in data:
@@ -4246,7 +4248,9 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
                         # embed.set_thumbnail(url=image)
     
                         await logsthread.send(embed=embed)
-                        time.sleep(1)  
+                        time.sleep(1) 
+            # Close the database connection
+            conn.close() 
     asyncio.create_task(sendLogs())
 
 # log export
