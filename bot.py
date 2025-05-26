@@ -4251,6 +4251,8 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
                         time.sleep(1) 
             # Close the database connection
             conn.close() 
+            print('closed the db connection')
+            
     asyncio.create_task(sendLogs())
 
 # log export
@@ -4395,12 +4397,9 @@ async def statTop(ctx: discord.Interaction, stat: str, mode:str, format: str='l&
         log_command(ctx.user.id, 'log-stats')
         statSearch = stat
         userid = user if user else ctx.user
+
+        name = userid
         
-        if userid.name == 'comeng_17':
-            name = 'comeng17'
-        else:
-            name = userid
-            # 
         if user != None:
             if user != ctx.user and ctx.user.id not in admin_users:
                 print(f'user {user} is not the same as {ctx.user}')
@@ -4420,7 +4419,7 @@ async def statTop(ctx: discord.Interaction, stat: str, mode:str, format: str='l&
                 elif mode == 'all':
                     data = allTopStats(userid.name, statSearch, year)
                 else:
-                    data = topStats(userid.name, statSearch, year, mode)
+                    data = topStats(userid.id, statSearch, year, mode)
                 
             except:
                 await ctx.followup.send('You have no logged trips!')
