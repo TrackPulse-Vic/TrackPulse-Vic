@@ -35,6 +35,7 @@ async def helpCommand(ctx,category,command):
             "</games station-order:1240101357847838813> - Play a game where you recall which stations are up or down from a specific station.",
             "</games station-hangman:1240101357847838813> - Play a game where you a station name, letter by letter.",
             "</stats leaderboard:1240101357847838815> - Shows the leaderboards for the games.",
+            "/train-art - Display ASCII art of Victorian trains with fun facts!",
         ],
         "logs":
         [
