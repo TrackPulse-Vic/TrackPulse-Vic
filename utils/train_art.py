@@ -130,27 +130,44 @@ TRAIN_FACTS = {
 }
 
 
+def _normalize_train_type(train_type: str) -> str:
+    """
+    Normalize train type string for consistent lookups.
+    
+    Args:
+        train_type: Raw train type string
+        
+    Returns:
+        Normalized train type string
+    """
+    train_type = train_type.lower().replace("'", "").replace(" ", "")
+    
+    # Handle variations in naming
+    if "xtrap" in train_type:
+        return "xtrapolis"
+    elif "nexas" in train_type:
+        return "siemens"
+    
+    return train_type
+
+
 def get_train_art(train_type: str = None) -> str:
     """
     Get ASCII art for a specific train type.
     
     Args:
         train_type: Type of train (comeng, siemens, xtrapolis, hcmt, vlocity, sprinter)
-                   If None, returns a random train.
+                   If None, returns a random train (excluding generic).
     
     Returns:
         ASCII art string of the train
     """
     if train_type is None:
-        train_type = random.choice(list(TRAIN_ART.keys()))
+        # Only select from trains with facts (exclude generic)
+        available_types = list(TRAIN_FACTS.keys())
+        train_type = random.choice(available_types)
     
-    train_type = train_type.lower().replace("'", "").replace(" ", "")
-    
-    # Handle variations in naming
-    if "xtrap" in train_type:
-        train_type = "xtrapolis"
-    elif "nexas" in train_type:
-        train_type = "siemens"
+    train_type = _normalize_train_type(train_type)
     
     return TRAIN_ART.get(train_type, TRAIN_ART["generic"])
 
@@ -169,13 +186,7 @@ def get_train_fact(train_type: str = None) -> str:
     if train_type is None:
         train_type = random.choice(list(TRAIN_FACTS.keys()))
     
-    train_type = train_type.lower().replace("'", "").replace(" ", "")
-    
-    # Handle variations in naming
-    if "xtrap" in train_type:
-        train_type = "xtrapolis"
-    elif "nexas" in train_type:
-        train_type = "siemens"
+    train_type = _normalize_train_type(train_type)
     
     facts = TRAIN_FACTS.get(train_type, ["Trains are cool!"])
     return random.choice(facts)
@@ -183,9 +194,10 @@ def get_train_fact(train_type: str = None) -> str:
 
 def get_all_train_types() -> list:
     """
-    Get list of all available train types.
+    Get list of all available train types (excluding generic fallback).
     
     Returns:
         List of train type names
     """
-    return list(TRAIN_ART.keys())
+    # Return only train types that have associated facts
+    return list(TRAIN_FACTS.keys())
