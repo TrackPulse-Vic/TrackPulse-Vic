@@ -2916,6 +2916,9 @@ async def logtrain(ctx, line:str, number:str, start:str, end:str, date:str='toda
         # Handle type first
         if type != 'auto':
             type_final = type
+            # Normalize Netflix alias to canonical name
+            if type.lower() == "netflix":
+                type_final = "Siemens Nexas"
             if type == "Tait":
                 set = '381M-208T-230D-317M'
             else:
