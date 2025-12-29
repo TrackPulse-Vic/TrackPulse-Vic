@@ -6840,22 +6840,22 @@ async def synclists(ctx):
         await printlog(f'{str(ctx.author.id)} tried to update stop data.')
         await ctx.send("You are not authorized to use this command.")
 
-@bot.command()
+@bot.command(name="restart")
 async def restart(ctx):
-    if ctx.author.id in admin_users:
-        log_command(ctx.author.id, 'restart')
-        await ctx.send(f"Restarting bot")
-        await printlog("Restarting bot")
-        
-        with open('restart.txt', 'w') as file:
-            file.write(str(ctx.channel.id))
-        await bot.close()
-        await stop_webserver()
-        os.system('python bot.py')
+    if ctx.author.id not in admin_users:
+        return await ctx.send("UYou are not authorized to use this command.")
 
-    else:
-        await printlog(f'{str(ctx.author.id)} tried to restart the bot.')
-        await ctx.send("You are not authorized to use this command.")
+    await ctx.send("Restarting... please wait.")
+    print("Bot is restarting...")
+
+    # Create the restart flag file (which your main loop already looks for on line 630)
+    with open('restart.txt', 'w') as f:
+        f.write(str(ctx.channel.id))
+
+    # This is the "Magic" part: 
+    # It tells the OS to replace the current process with a new one
+    # This ensures the old bot instance dies immediately.
+    os.execv(sys.executable, ['python'] + sys.argv)
 
 @bot.command()
 async def update(ctx):
