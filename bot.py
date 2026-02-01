@@ -62,7 +62,7 @@ from utils.trainlogger.map.line_coordinates_log_train_map_pre_munnel import getT
 from utils.trainlogger.map.line_coordinates_log_train_map_post_munnel import getTotalLines_post_munnel
 from utils.trainlogger.map.line_coordinates_log_sydney_tram_map import getTotalLines_sydney_tram
 from utils.vicrailphotosapi.accepter import acceptPhoto, webAddImage
-from utils.webAPI.logger import logTrip
+from utils.webAPI.logger import deleteLogAPI, getUserCSV, logTrip
 sys.stdout = sys.__stdout__ 
 
 original_open = builtins.open
@@ -2972,6 +2972,8 @@ async def logtrain(ctx, line:str, number:str, start:str, end:str, date:str='toda
         if APIresponse == 'error':
             await ctx.edit_original_response(content='There was an error logging your trip. Please try again later.')
             return
+        else:
+            await printlog(f'Logged train with log ID {APIresponse["log_id"]}')
         
         if line in vLineLines:
             embed = discord.Embed(title="Train Logged",colour=vline_map_colour)
@@ -3046,21 +3048,9 @@ async def logtrain(ctx, line:str, number:str, start:str, end:str, date:str='toda
 
     
 #thing to delete the stuff
-@trainlogs.command(name='delete', description='Delete a logged trip. Defaults to the last logged trip.')
-@app_commands.describe(id = "The ID of the log that you want to delete.", mode='What mode of log to delete?')
-@app_commands.choices(mode=[
-    app_commands.Choice(name="Victorian Train", value="train"),
-    app_commands.Choice(name="Melbourne Tram", value="tram"), 
-    app_commands.Choice(name="NSW Train", value="sydney-trains"),
-    app_commands.Choice(name="Sydney Light Rail", value="sydney-trams"),
-    app_commands.Choice(name="Adelaide Train", value="adelaide-trains"),
-    app_commands.Choice(name="Adelaide Tram", value="adelaide-trams"),
-    app_commands.Choice(name="Perth Train", value="perth-trains"),
-    app_commands.Choice(name="Canberra Light Rail", value="canberra-trams"),
-    app_commands.Choice(name="Bus", value="bus"),
-    app_commands.Choice(name="Flight", value="flights"),
-])
-async def deleteLog(ctx, mode:str, id:str='LAST'):
+@trainlogs.command(name='delete')
+@app_commands.describe(id = "The ID of the log that you want to delete.")
+async def deleteLog(ctx, mode:str, id:int):
     class DeleteConfirmation(discord.ui.View):
         def __init__(self):
             super().__init__(timeout=30)
@@ -3072,13 +3062,10 @@ async def deleteLog(ctx, mode:str, id:str='LAST'):
                 return
             
             # Delete the log
-            idformatted1 = deleteRow(ctx.user.name, idformatted, mode)
+            APIresponse = deleteLogAPI(idformatted, f'oauth2|discord|{ctx.user.id}')
             
             # Update message
-            if idformatted == 'LAST':
-                await interaction.response.edit_message(content=f'Most recent log (`#{idformatted1}`) deleted. The data was:\n`{dataToDelete}`', view=None)
-            else:
-                await interaction.response.edit_message(content=f'Log `#{idformatted}` deleted. The data was:\n`{dataToDelete}`', view=None)
+            await interaction.response.edit_message(content=f'Log `#{APIresponse["log_id"]}` deleted. The data was:\n`{APIresponse}`', view=None)
                 
             for child in self.children:
                 child.disabled = True
@@ -3097,11 +3084,7 @@ async def deleteLog(ctx, mode:str, id:str='LAST'):
         log_command(ctx.user.id, 'log-delete')
         
         nonlocal idformatted, dataToDelete  # Make these accessible in button callbacks
-        
-        if id[0] == '#':
-            idformatted = id[1:].upper()
-        else:
-            idformatted = id.upper()
+        idformatted = id
 
         if idformatted != 'LAST':
             if not is_hex(idformatted):
@@ -4059,6 +4042,8 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
         if id != None:
             await ctx.response.defer()
             
+            getUserCSV(f'oauth2|discord|{userid.id}', userid.name, mode=mode)
+            
             if mode == 'train':
                 file_path = f'utils/trainlogger/userdata/{userid.name}.csv'
                 
@@ -4084,15 +4069,10 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
                 file_path = f'utils/trainlogger/userdata/canberra-trams/{userid.name}.csv'
                 
             
-            
             with open(file_path, mode='r', newline='') as file:
-                
-                if not id.startswith('#'):
-                    cleaned_id = '#' + id
-                else:
-                    cleaned_id = id
                 csv_reader = csv.reader(file)
                 for row in csv_reader:
+                    cleaned_id = id
                     if row[0] == cleaned_id.upper():
                         
                         # thing to find image:
@@ -4155,6 +4135,7 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None, 
                 await ctx.followup.send(f'Cannot find log `{id}`')
                 
         else:
+            getUserCSV(f'oauth2|discord|{userid.id}', userid.name, mode=mode)
             # for train
             if mode == 'train':
                 if user == None:
