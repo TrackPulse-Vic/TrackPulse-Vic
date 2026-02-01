@@ -6,15 +6,6 @@ load_dotenv()
 WEB_BASE_URL = os.getenv('WEB_BASE_URL')
 
 def logTrip(mode, userid:int, start=None, end=None, line=None, number=None, vType=None, date=None, note=None, tags=None):
-    """
-    Logs a trip with the given parameters.
-
-    Parameters:
-    - userid (int): Discord user ID.
-
-    Returns:
-    None
-    """
     if not WEB_BASE_URL:
         print("WEB_BASE_URL is not set in the environment variables.")
         return 'error'
@@ -123,16 +114,6 @@ def getUserCSV(username, displayName, mode=None, save=True):
     return '\n'.join(lines[1:]) if response.status_code == 200 and len(lines) > 1 else None
 
 def deleteLogAPI(log_id, userid:int):
-    """
-    Deletes a log with the given log ID and user ID.
-
-    Parameters:
-    - log_id (str): The ID of the log to delete.
-    - userid (int): Discord user ID.
-
-    Returns:
-    None
-    """
     if not WEB_BASE_URL:
         print("WEB_BASE_URL is not set in the environment variables.")
         return 'error'
@@ -152,4 +133,19 @@ def deleteLogAPI(log_id, userid:int):
         print(f"Error deleting log: {e}")
         return 'error'
         
+    return response.json() if response.status_code == 200 else None
+
+def getSingleLogID(logId):
+    if not WEB_BASE_URL:
+        print("WEB_BASE_URL is not set in the environment variables.")
+        return 'error'
+    
+    try:
+        response = requests.get(f"{WEB_BASE_URL}/log/{logId}")
+        response.raise_for_status()
+    except requests.RequestException as e:  
+        print(f"Error retrieving log: {e}")
+        return 'error'
+        
+    print(response.json())
     return response.json() if response.status_code == 200 else None

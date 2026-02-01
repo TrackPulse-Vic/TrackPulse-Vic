@@ -62,7 +62,7 @@ from utils.trainlogger.map.line_coordinates_log_train_map_pre_munnel import getT
 from utils.trainlogger.map.line_coordinates_log_train_map_post_munnel import getTotalLines_post_munnel
 from utils.trainlogger.map.line_coordinates_log_sydney_tram_map import getTotalLines_sydney_tram
 from utils.vicrailphotosapi.accepter import acceptPhoto, webAddImage
-from utils.webAPI.logger import deleteLogAPI, getUserCSV, logTrip
+from utils.webAPI.logger import deleteLogAPI, getSingleLogID, getUserCSV, logTrip
 sys.stdout = sys.__stdout__ 
 
 original_open = builtins.open
@@ -3050,7 +3050,7 @@ async def logtrain(ctx, line:str, number:str, start:str, end:str, date:str='toda
 #thing to delete the stuff
 @trainlogs.command(name='delete')
 @app_commands.describe(id = "The ID of the log that you want to delete.")
-async def deleteLog(ctx, mode:str, id:int):
+async def deleteLog(ctx, id:int):
     class DeleteConfirmation(discord.ui.View):
         def __init__(self):
             super().__init__(timeout=30)
@@ -3091,12 +3091,12 @@ async def deleteLog(ctx, mode:str, id:int):
                 await ctx.response.send_message(f'Invalid log ID entered: `{idformatted}`. You can find the ID of a log to delete by using </log view:1289843416628330506>.', ephemeral=True)
                 return
                 
-        dataToDelete = universalReadRow(ctx.user.name, idformatted, mode)
-        if dataToDelete in ['no data at all', 'no data for user']:
-            await ctx.response.send_message(f'You have no logs you can delete!', ephemeral=True)
+        dataToDelete = getSingleLogID(idformatted)
+        if dataToDelete == None:
+            await ctx.response.send_message(f'Log ID `{idformatted}` not found. You can find the ID of a log to delete by using </log view:1289843416628330506>.', ephemeral=True)
             return
-        elif dataToDelete == 'invalid id did not show up':
-            await ctx.response.send_message(f'Invalid log ID entered: `{idformatted}`. You can find the ID of a log to delete by using </log view:1289843416628330506>.', ephemeral=True)
+        elif dataToDelete['user'] != f'oauth2|discord|{ctx.user.id}':
+            await ctx.response.send_message(f'Log ID `{idformatted}` does not belong to you.', ephemeral=True)
             return
         
         else:
