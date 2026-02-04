@@ -3064,6 +3064,12 @@ async def deleteLog(ctx, id:int):
             # Delete the log
             APIresponse = deleteLogAPI(idformatted, f'oauth2|discord|{ctx.user.id}')
             
+            if APIresponse == 'error':
+                await interaction.response.edit_message(content='There was an error deleting your log. Please try again later.', view=None)
+                for child in self.children:
+                    child.disabled = True
+                return
+            
             # Update message
             await interaction.response.edit_message(content=f'Log `#{APIresponse["log_id"]}` deleted. The data was:\n`{APIresponse}`', view=None)
                 
@@ -3092,7 +3098,12 @@ async def deleteLog(ctx, id:int):
                 return
                 
         dataToDelete = getSingleLogID(idformatted)
-        if dataToDelete == None:
+        
+        if dataToDelete == 'error':
+            await ctx.response.send_message('There was an error retrieving your log. Please try again later.', ephemeral=True)
+            return
+        
+        elif dataToDelete == None:
             await ctx.response.send_message(f'Log ID `{idformatted}` not found. You can find the ID of a log to delete by using </log view:1289843416628330506>.', ephemeral=True)
             return
         elif dataToDelete['user'] != f'oauth2|discord|{ctx.user.id}':
