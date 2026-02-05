@@ -1481,6 +1481,35 @@ async def bussearchcommand(ctx, bus: str):
 
     except Exception as e:
         await ctx.edit_original_response(content=f"can not find that bus in list")
+
+@bot.tree.command(name="import-bus-tram-data", description="ADMIN ONLY Import csv data for search bus and tram")
+@app_commands.describe(mode="bus or tram")
+@app_commands.choices(mode=[
+    app_commands.Choice(name="Bus", value="bus"),
+    app_commands.Choice(name="Tram", value="tram"),
+])
+    
+async def importbustram(ctx, mode:str, file:discord.Attachment):
+    if ctx.user.id in admin_users or ctx.user.id == 581098452327464973:
+        await ctx.response.defer()
+        try:
+            await file.save(f'temp/{file.filename}')
+            if not file.filename.endswith('.csv'):
+                await ctx.edit_original_response(content="Invalid file format! Make sure you're uploading a CSV file.")
+                return
+            if mode == 'bus':
+                save_path = f'utils/bussets.csv'
+            elif mode == 'tram':
+                save_path = f'utils/tramsets.csv'
+            shutil.copy(f'temp/{file.filename}', save_path)  
+            await ctx.edit_original_response(content=f"Successfully imported data for {mode} to `{save_path}`")
+            os.remove(f'temp/{file.filename}') 
+        except Exception as e:
+                await ctx.edit_original_response(content=f"Error importing data: {str(e)}")
+    else:
+        await ctx.edit_original_response("You do not have permission to use this command.")
+        return
+    
     
 # add a favourite stop
 async def stop_autocompletion(
