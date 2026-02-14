@@ -2,7 +2,6 @@
 5 Bass School Rd
 65 Hade Ave #63
 7347 Henty Hwy
-79 Moe-Glengarry Rd
 85 Franklin St
 ANZ Bank/Wagonga St
 Acacia Rd/Creswick-Newstead Rd
@@ -10,7 +9,6 @@ Adiscott Rd/Great Ocean Rd
 Alberton Store/South Gippsland Hwy
 Albury Railway Station
 Albury Station/Hume Hwy
-Algie Rd/Murray Valley Hwy
 Alpine Hotel/Anderson St
 Anderson Bus Interchange/Bass Hwy
 Anglesea Motor Inn/Great Ocean Rd
@@ -21,14 +19,11 @@ Apex Park/Princes Hwy
 Ararat Railway Station
 Ararat Railway Station/High St
 Ardeer Railway Station
-Ardeer Station/Forrest St
 Austin St/Henty Hwy
 Austin St/Penhurst-Warrnambool Rd
 Austin St/Warncoort-Birregurra Rd
-Australia Post/Mollison St
 Avenel Railway Station
-Avoca Hotel/Sunraysia Hwy
-Avoca Information Centre/Sunraysia Hwy
+Avenel Station/Queen St
 Axedale Rd/Northern Hwy
 BP Roadhouse/Glenelg Hwy
 BP Roadhouse/Homburg Tce
@@ -43,7 +38,7 @@ Bailey St/Nicholson St
 Bailey St/Princes Hwy
 Bairnsdale Railway Station
 Bairnsdale Railway Station/MacLeod St
-Bairnsdale Station/Macleod St
+Bairnsdale Railway Station/Macleod St
 Ballan Police Station/Old Melbourne Rd
 Ballan Railway Station
 Ballan Station/Atkinson St
@@ -72,6 +67,7 @@ Bendigo-Murchison Rd/Northern Hwy
 Bennet Lane
 Bermagui Motor Inn/Lamont St
 Berwick Railway Station
+Big Strawberry Restaurant/Cobram-Koonoomoo Rd
 Big Strawberry Restaurant/Goulburn Valley Hwy
 Birdwood Ave/Brundenell St
 Birregurra Railway Station
@@ -80,11 +76,13 @@ Blanche St/Foord St
 Bloomfield Rd/Queen St
 Boisdale St/Johnson St
 Boort - Pyramid Rd/Loddon Valley Hwy
-Boort-Wederburn Rd
+Boort/Godfrey St
 Border Service Station/Murray St
 Boree St/Sunraysia Hwy
+Borung/Boort-Wederburn Rd
 Brambuk the National Park and Cultural Centre/Grampians Rd
 Bridges Barracks/Morobe Rd
+Bridgewater/Calder Hwy
 Broadford Railway Station
 Broadford Station/High St
 Broadmeadows Railway Station
@@ -97,7 +95,6 @@ Bunyip Station/Nar Nar Goon-Longwarry Rd
 Bus Interchange/Lead St
 Butcher Shop/Service St
 CFA Station/Glenelg Hwy
-CFA/Boort-Wedderburn Rd
 CFA/Bridport St
 CFA/Sunraysia Hwy
 Caltex Roadhouse/Newell Hwy
@@ -129,14 +126,13 @@ Caulfield Station/Sir John Monash Dr
 Centennial Park/Bombala St
 Centre Valley Rd/Princes Dr
 Chiltern Railway Station
-Church Rd/Henty Hwy
+Chiltern Station/Railway Access Rd
 Church St/Walnut St
 Clarence St/Victoria Rd
 Clarendon-Lal Lal Rd/Midland Hwy
 Clarkefield Railway Station
 Clarkefield Station/Station St
 Clayton Railway Station
-Clayton Station/Haughton Rd
 Clunes Railway Station
 Clunes Station/Ballarat Maryborough Rd
 Clunes-Creswick
@@ -145,17 +141,14 @@ Coach Terminal/24 Roberts Ave
 Coal Creek Museum/South Gippsland Hwy
 Coastside Dr/Surf Coast Hwy
 Cobblebank Railway Station
-Cobblebank Station
 Cobram Station/Punt Rd
 Coburg PS/Bell St
-Coffeys Lane/Princes Hwy
 Colac Railway Station
 Colac Station/Gellibrand St
 Colbinabbin General Store/Mitchell St
 Condah - Coleraine Rd/Henty Hwy
 Corinella Rd/Bass Hwy
 Corio Railway Station
-Corner Store/Lynch St
 Corner Store/Main St
 Cowes Transit Centre/Church St
 Craigieburn Railway Station
@@ -189,7 +182,6 @@ Drummond St/Glenelg Hwy
 Dundas St/Market St
 Dunolly Rd
 Eaglehawk Railway Station
-Eaglehawk Station/Hall St
 Eaglesons Rd/Clarendon-Lal Lal Rd
 East Pakenham Railway Station
 East Pakenham Station/Sharnet Cct
@@ -202,7 +194,6 @@ Elmore Railway Station
 Elmore Station/Northern Hwy
 Ely St/Snow Rd
 Epsom Railway Station
-Epsom Station/Station St
 Essendon Railway Station
 Euroa - Mansfield Rd/Maroondah Hwy
 Euroa Railway Station
@@ -217,10 +208,9 @@ Family Store/Malaya Rd
 Farrell Park/3591 Katamatite-Shepparton Rd
 Federation Uni Blainey Dr/University Dr
 Feehans Rd/Surf Coast Hwy
-Fincks Rd/Princes Hwy
 Fisher St/Western Hwy
 Fitzgerald Rd/Robinvale - Sea Lake Rd
-Flinder St Station/Flinders St
+Fitzgerald Rd/Robinvale - Seal Lake Rd
 Flinders Street Railway Station
 Flowerdale Hotel/Whittlesea-Yea Rd
 Footscray Railway Station
@@ -246,7 +236,6 @@ General Store/Glenelg Hwy
 General Store/Goulburn Valley Hwy
 General Store/Greenham St
 General Store/Hamilton Hwy
-General Store/Macs St
 General Store/Mallee Hwy
 General Store/Midland Hwy
 General Store/Murray St
@@ -269,10 +258,8 @@ Gisborne Town Centre/Aitken St
 Glenloth Rd/Calder Hwy
 Glossop St/Bendigo - Pyramid Rd
 Golf Links Rd/Great Ocean Rd
-Goornong Newsagency/Midland Hwy
 Goornong Railway Station
 Goornong Station/Midland Hwy
-Gordon St/Maffra Rd
 Gordon St/Mary St
 Goulburn Valley Health/Graham St
 Grain Silo/Wimmera Hwy
@@ -280,6 +267,7 @@ Grampians Gardens Caravan Park/Grampians Rd
 Grantville-Glen Alvie Rd/Bass Hwy
 Great Ocean Rd
 Great Ocean Rd/Camp Rd
+Grey River Rd/Hawdon Ave
 Grossmans Rd/Surf Coast Hwy
 Guildford General Store/Midland Hwy
 Gully Rd/Maldon-Newstead Rd
@@ -291,7 +279,6 @@ Hamilton Station/Station St
 Hamilton Town Centre/Brown St
 Harrison St/Marengo Crst
 Hassell St/Calder Hwy
-Havelock St/Clarendon St
 Hawdon Ave/Great Ocean Rd
 Hazeldene Bridge/Whittlesea-Yea Rd
 Heathcote Junction Railway Station
@@ -304,11 +291,9 @@ High St/Main Rd
 High St/Moora Rd
 High St/Murray St
 High St/Vine St
-Highview Christian College/Kars St
 Hogan St/Fraser St
 Hogans Newsagent/Phillips St
 Holyrood St/Park Rd
-Hotel and Post Office/Brown St
 Hotel/Midland Hwy
 Hotel/Sunraysia Hwy
 Hotel/Western Hwy
@@ -319,13 +304,12 @@ Hunter St/Loddon Valley Hwy
 Hunters Lane/Princes Hwy
 Huntly Railway Station
 Information Centre/Glenelg Hwy
-Information Centre/Godfrey St
 Information Centre/Grampians Rd
 Information Centre/South Tce
 Information Centre/Western Hwy
 Inglewood St/Bendigo - Pyramid Rd
+Inglewood/Grant St
 Inverloch Police Station/Bayview Ave
-Jabuk Store/Mallee Hwy
 Jacka Park/Chapel St
 Jarosite Rd/Great Ocean Rd
 Jennifer Ct/Pioneer Rd
@@ -346,14 +330,15 @@ Kilmore East Railway Station
 Kilmore East Station/O'Gradys Rd
 King Albert Ave/Leitchville Rd
 King St/Commercial St
-Kirkwoods Rd/Henty Hwy
 Koala Dr/Swan Rd
 Kokoda Rd/Murray Valley Hwy
 Koo Wee Rup Bus Interchange/Rossiter Rd
-Korong Vale Senior Citizens/Allen St
+Kooloonong Rd/Murray Valley Hwy
+Korong Vale/Allen St
 Kyneton Railway Station
 Kyneton Station/Kyneton-Trentham Rd
-La Trobe University/Retreat Rd
+Kyneton Town Centre/Jennings St
+La Trobe University Bendigo/Retreat Rd
 La Trobe University/Sharon St
 Lake Bellfield/Tymna Dr
 Lake Burrumbeet Caravan Park/Remembrance Dr
@@ -370,7 +355,7 @@ Latrobe St/Princes Hwy
 Lava Street Interchange/Lava St
 Lawler St/Midland Hwy
 Leongatha Railway Station/Long St
-Lilydale Station/Maroondah Hwy
+Lilydale Station/Main St
 Lindenow Rd/Princes Hwy
 Lindsay St/Princes Hwy
 Little River Railway Station
@@ -388,7 +373,7 @@ Lorne Visitor Centre/Great Ocean Rd
 Lyall St/South Gippsland Hwy
 MMBL Depot/High St
 Macedon Railway Station
-Macedon Station/Railway Pl
+Macedon Station/Victoria St
 Maguire St/Murray Valley Hwy
 Maiden Gully Rd/Calder Hwy
 Main St/Church St
@@ -401,7 +386,7 @@ Malmsbury Station/Campbell St
 Mangan St/Henderson Rd
 Market St/Harmony Way
 Marlo Primary School/Jorgensen St
-Marong General Store/Calder Hwy
+Marong/Calder Hwy
 Marshall Railway Station
 Marshall Station/Marshalltown Rd
 Maryborough Railway Station
@@ -410,7 +395,6 @@ McAlpine Rd/Murray Valley Hwy
 McDonald St/Marma St
 McEwan Rd/Traralgon - Maffra Rd
 McGregor's Garage/Donald - Swan Hill Rd
-McNamara Dr/Calder Hwy
 McPhillips Rd/High St
 McRae Rd/Great Ocean Rd
 Melbourne Airport/Grants Rd
@@ -427,7 +411,7 @@ Mickle St/South Gippsland Hwy
 Mid Valley Shopping Centre/Mid Valley Dr
 Middle St/Princes Hwy
 Milawa-Bobinawarrah Rd/Snow Rd
-Mildura Railway Station/Seventh St
+Mildura Station/Seventh St
 Milk Bar/Echuca - Nathalia Rd
 Milk Bar/Glenelg Hwy
 Milk Bar/Station St
@@ -441,7 +425,6 @@ Mitchell St/High St
 Mobil Roadhouse/Sunraysia Hwy
 Moe Railway Station
 Moe Station/Lloyd St
-Monica St/Guthrie St
 Monro St/Bombala St
 Moorabool St/Malop St
 Mooroopna Railway Station
@@ -459,6 +442,7 @@ Murray River Council/Cobb Hwy
 Murray Valley Hwy
 Murrayville Hotel/Mallee Hwy
 Murrumbateman Hotel/Barton Hwy
+Mysia/Boort-Wedderburn Rd
 Nagambie Railway Station
 Nagambie Station/Prentice St
 Napier St/Derby St
@@ -469,7 +453,6 @@ Narrawong Store/Princes Hwy
 Nathalia Hotel/Blake St
 Navigators Rd
 Neals Rd/Meeniyan - Promontory Rd
-Newborough TAFE/Monash Rd
 Newbridge General Store/Wimmera Hwy
 Newsagency/Best St
 Newsagency/Hamilton Hwy
@@ -507,11 +490,11 @@ Panorama Ave/Back Beach Rd
 Parilla Store/Mallee Hwy
 Park Lane/Bell St
 Park St
-Park St/Calder Hwy
 Peake Hotel/Mallee Hwy
 Pearses Rd/Hamilton - Port Fairy Rd
 Pearson St/Johnson St
 Peppermint Rd/Bass Hwy
+Peterborough General Store/Macs St
 Phillip St/Bon Cres
 Pier Rd/Bass Hwy
 Pierce Rd/Bendigo - Pyramid Rd
@@ -521,13 +504,12 @@ Pisces Holiday Park/Great Ocean Rd
 Point Roadknight/Great Ocean Rd
 Police Station/Roadknight St
 Port Fairy Visitor Centre/Bank St
-Post Office/Anzac Rd
+Post Office North/Esplanade
 Post Office/Calder Hwy
 Post Office/Great Ocean Rd
 Post Office/Hamilton Hwy
 Post Office/Hobson St
 Post Office/King Edward St
-Post Office/Murray Valley Hwy
 Post Office/Myrtle St
 Post Office/Princes Hwy
 Post Office/Railway Tce
@@ -541,9 +523,9 @@ Princes Fwy
 Princes Hwy
 Pulhams Store/Main St
 Pyramid Railway Station
+Quambatook Hotel/Guthrie St
 Quinn St/Mieklejohn St
 RMIT Bundoora Campus West/Plenty Rd
-Raglan St/Albert St
 Railway Hotel/Creswick - Newstead Rd
 Railway St/Traralgon - Maffra Rd
 Ramsay Bvd/The Esplanade
@@ -553,12 +535,10 @@ Recreation Reserve/Grampians Rd
 Red Cliffs Post Office/Indi Ave
 Reserve Rd/Torquay Rd
 Richmond Railway Station
-Richmond Station/Punt Rd
 Riddells Creek Railway Station
 Riddells Creek Station/Hamilton St
 Rivadestra Pizza & Pasta/Bridge Rd
 River St/Midland Hwy
-Rivetts Rd/Princes Hwy
 Roadhouse/Melba Hwy
 Roadside Stop/Mallee Hwy
 Roadside Store/Calder Alternative Hwy
@@ -567,7 +547,6 @@ Robinvale Railway Station/Bromley Rd
 Rochester Railway Station
 Rochester Station/Northern Hwy
 Rockbank Railway Station
-Rockbank Station/Leakes Rd
 Romsey Community Hub/Main St
 Roo Fuel/Meeniyan - Promontory Rd
 Rosebery Station/Henty Hwy
@@ -584,7 +563,6 @@ School Rd/Great Ocean Rd
 School St/Moora Rd
 Scott St/Woolcock St
 Seaward Dr/Cape Paterson Rd
-Segtnan Ct/Princes Hwy
 Selwyn St/Sturt Hwy
 Service Station/Daylesford-Trentham Rd
 Service Station/Murray Valley Hwy
@@ -612,6 +590,7 @@ Southern Cross Railway Station
 Sovereign Hill/Main Rd
 Spring St/Commercial Rd
 Springhurst Railway Station
+Springhurst Station/Canning Rd
 St James Rd/Devenish Rd
 Stanley Rd/Bass Hwy
 Station Rd/Commercial Rd
@@ -620,6 +599,7 @@ Stawell Station/Napier St
 Stawell Town Hall/Main St
 Stock St/Bridge Rd
 Stratford Railway Station
+Stratford Station/Dixon St
 Sun River Home Park/Northern Hwy
 Sunbury Railway Station
 Sunbury Station/Brook St
@@ -636,7 +616,6 @@ Sweetie's Bakery/North Tce
 Sydenham Inlet Rd/Princes Hwy
 Talbot Railway Station
 Talbot Station/Railway St
-Talbot Town Hall/Ballarat St
 Tallarook Railway Station
 Tallarook Station/Sanctuary Rd
 Tarneit Railway Station
@@ -672,7 +651,6 @@ Tynong Railway Station
 Tynong Station/Nar Nar Goon - Longwarry Rd
 Upper Goulburn Rd/Goulburn Valley Hwy
 Ventnor Beach Rd/Gap Rd
-Verdon St/Grant St
 Victoria Rd/Goulburn Valley Hwy
 Victoria St/Cowen St
 Victoria St/High St
@@ -680,6 +658,7 @@ Victory Park/Hall Rd
 Village Green/North Rd
 Vine St/Vine St
 Violet Town Railway Station
+Violet Town Station/Primrose St
 Visitor Information Centre/Great Ocean Rd
 Visitors Centre/Jondaryan Ave
 Wairewa Rd/Princes Hwy
@@ -717,22 +696,21 @@ Wendouree Railway Station
 Wendouree Station
 Western Hwy
 Westpac Bank/Albury St
-Whalers Rest Motel/Henty Hwy
 White St/Hamilton - Port Fairy Rd
 Whyte St/Henty St
 Wills St/Edwards St
 Winchelsea Railway Station
 Winchelsea Station
 Windermere Way/Madden Rd
-Wodonga CBD/Elgin Bvd
 Wodonga Railway Station
 Wodonga Station/Moloney Dr
 Wodonga TAFE/87 McKoy St
 Wonboyn Rd/Princes Hwy
 Wonthaggi Bus Interchange/Biggs Dr
 Wonthaggi Community Garden/Bass Hwy
+Wood Wood General Store/Murray Valley Hwy
 Woodend Railway Station
-Woodend Station/Corinella Rd
+Woodend Station/Station St
 Woolshed Rd/Maroondah Hwy
 Woomelang Station/Sunraysia Hwy
 Wrights St/Maroondah Hwy
@@ -742,5 +720,6 @@ Yarragon Railway Station
 Yarragon Station/Princes Hwy
 Yarringa Rd/Great Ocean Rd
 Yendon Rd/Harbours Rd
+Zeerust Rd/Barmah - Sheppartoin Rd
 Zeerust Rd/Barmah - Shepparton Rd
 east of Pechell St/High St

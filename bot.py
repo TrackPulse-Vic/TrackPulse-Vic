@@ -338,7 +338,7 @@ async def printlog(text):
 # check if these things are on in the .env
 rareCheckerOn = False
 automatic_updates = False
-admin_users = [1002449671224041502, 780303451980038165, 634620519500480512, int(USER_ID)]
+admin_users = [1002449671224041502, 780303451980038165, 634620519500480512, 581098452327464973, int(USER_ID)]
 if config['RARE_SERVICE_CHECKER'] == 'ON':
     rareCheckerOn = True
 startupAchievements = False

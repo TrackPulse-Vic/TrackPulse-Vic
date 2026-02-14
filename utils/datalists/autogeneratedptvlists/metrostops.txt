@@ -4,6 +4,8 @@ Albion Station
 Alphington Station
 Altona Station
 Anstey Station
+Anzac Station
+Arden Station
 Armadale Station
 Ascot Vale Station
 Ashburton Station
@@ -103,7 +105,7 @@ Hurstbridge Station
 Ivanhoe Station
 Jacana Station
 Jewell Station
-Jolimont Station
+Jolimont-MCG Station
 Jordanville Station
 Kananook Station
 Keilor Plains Station
@@ -155,6 +157,7 @@ Officer Station
 Ormond Station
 Pakenham Station
 Parkdale Station
+Parkville Station
 Parliament Station
 Pascoe Vale Station
 Patterson Station
@@ -187,6 +190,7 @@ Southland Station
 Spotswood Station
 Springvale Station
 St Albans Station
+State Library Station
 Stony Point Station
 Strathmore Station
 Sunbury Station
@@ -198,6 +202,7 @@ Thornbury Station
 Toorak Station
 Tooronga Station
 Tottenham Station
+Town Hall Station
 Tyabb Station
 Union Station
 Upfield Station

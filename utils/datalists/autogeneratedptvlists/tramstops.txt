@@ -280,7 +280,6 @@ D6-Victoria Police Centre/Flinders St
 Daly St/Dawson St #33
 Dandenong Rd/Chapel St #42
 Dandenong Rd/Derby Rd #58
-Dandenong Rd/Glenferrie Rd #48
 Dandenong Rd/Glenferrie Rd #52
 Dandenong Rd/Waverley Rd #59
 Danks St/Mills St #136
@@ -768,6 +767,7 @@ Queensberry St/Abbotsford St #14
 Queensberry St/Peel St #11
 Queensberry St/Swanston St #4
 RMIT University/Swanston St #7
+RMIT/Plenty Rd #71
 Racing Victoria/161 Epsom Rd #31
 Racing Victoria/400 Epsom Rd #31
 Raglan St/Plenty Rd #43
@@ -790,6 +790,7 @@ River Bvd/Victoria St #25
 River St/Rosamond Rd #52
 Riversdale Rd/Burke Rd #61
 Riversdale Rd/Glenferrie Rd #70
+Riversdale Station/Riversdale Rd #46
 Robinson Rd/Riversdale Rd #35
 Rogers Ave/Hawthorn Rd #67
 Rogers St/Sydney Rd #36
@@ -837,7 +838,6 @@ South Melbourne Station/Light Rail #127
 South St/Glenferrie Rd #69
 South Yarra Railway Station/Toorak Rd #127
 Southern Cross Railway Station/Spencer St #122
-Spencer Rd/Riversdale Rd #46
 Spencer St/Bourke St #1
 Spencer St/Collins St #1
 Spencer St/Flinders St #1
@@ -930,6 +930,7 @@ Union St/St Kilda Rd #29
 Urquhart St/Glenferrie Rd #71
 Vadlure Ave/Balaclava Rd #41
 Van Ness Ave/Raleigh Rd #43
+Vermont South Shopping Centre/Burwood Hwy #75
 Victoria Park/High St #38
 Victoria Rd/Burke Rd #65
 Victoria St/Church St #65

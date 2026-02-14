@@ -356,7 +356,7 @@ def checkAchievements(user):
         'Sandringham': ['Siemens Nexas', 'Alstom Comeng', 'EDI Comeng'], 
         'Upfield': ['Alstom Comeng', 'EDI Comeng', 'Siemens Nexas', "X'Trapolis 2.0"], 
         'Craigieburn': ['Alstom Comeng', 'EDI Comeng', 'Siemens Nexas', "X'Trapolis 2.0"], 
-        'Sunbury': ['HCMT', 'Alstom Comeng', 'EDI Comeng', 'Siemens Nexas']
+        'Sunbury': ['HCMT']
     }
     
     ptv_trains = ['Alstom Comeng', 'EDI Comeng', 'Siemens Nexas', "HCMT", "X'Trapolis 100", "X'Trapolis 2.0", 'VLocity', 'Sprinter', 'N Class']
@@ -451,7 +451,7 @@ def checkAchievements(user):
             'achievement': '21'
         },
         'Cross City': {
-            'lines': {'Frankston', 'Werribee', 'Williamstown'},
+            'lines': {'Sandringham', 'Werribee', 'Williamstown'},
             'achievement': '22'
         },
         'Sandringham': {
@@ -459,7 +459,7 @@ def checkAchievements(user):
             'achievement': '23'
         },
         'Northern': {
-            'lines': {'Sunbury', 'Craigieburn', 'Upfield'},
+            'lines': {'Craigieburn', 'Upfield'},
             'achievement': '24'
         },
         'Clifton Hill': {
@@ -467,7 +467,7 @@ def checkAchievements(user):
             'achievement': '25'
         },
         'Dandenong': {
-            'lines': {'Pakenham', 'Cranbourne'},
+            'lines': {'Pakenham', 'Cranbourne', 'Sunbury'},
             'achievement': '26'
         }
     }

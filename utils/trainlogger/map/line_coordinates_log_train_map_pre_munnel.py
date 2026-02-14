@@ -290,10 +290,10 @@ line_coordinates = {
         ('North Richmond', 'West Richmond'):[
             (4150 + x_offset, 1350 + y_offset, 4250 + x_offset, 1600 + y_offset),
         ],
-        ('West Richmond','Jolimont'):[
+        ('West Richmond','Jolimont-Mcg'):[
             (4150 + x_offset, 1550 + y_offset, 4250 + x_offset, 1800 + y_offset),
         ],
-        ('Jolimont','Flinders Street'):[
+        ('Jolimont-Mcg','Flinders Street'):[
               (3600 + x_offset, 1750 + y_offset, 4250 + x_offset, 1950 + y_offset),
               (3050 + x_offset, 1900 + y_offset, 3350 + x_offset, 1950 + y_offset),
                 (2750 + x_offset, 1500 + y_offset, 3050 + x_offset, 1650 + y_offset), # Town hall part
@@ -326,7 +326,7 @@ line_coordinates = {
             (3200 + x_offset, 850 + y_offset, 3250 + x_offset, 1250 + y_offset),
             (3050 + x_offset, 1250 + y_offset, 3600 + x_offset, 1400 + y_offset), # Parliament Coords
         ],
-        ('Parliament','Jolimont'):[
+        ('Parliament','Jolimont-Mcg'):[
             (3050 + x_offset, 1250 + y_offset, 3600 + x_offset, 1400 + y_offset), # Parliament Coords
             (3200 + x_offset, 1400 + y_offset, 3250 + x_offset, 1950 + y_offset),
             (3200 + x_offset, 1850 + y_offset, 3350 + x_offset, 1950 + y_offset),
