@@ -725,8 +725,7 @@ line_coordinates = {
         ('Anzac','Town Hall'): [
             (2750 + x_offset, 3000 + y_offset, 3950 + x_offset, 3050 + y_offset),
             (3900 + x_offset, 2950 + y_offset, 3950 + x_offset, 3050 + y_offset),
-            (2750 + x_offset, 2650 + y_offset, 2850 + x_offset, 3050 + y_offset),
-            (2800 + x_offset, 2550 + y_offset, 2850 + x_offset, 2600 + y_offset),
+            (2750 + x_offset, 2550 + y_offset, 2850 + x_offset, 3050 + y_offset),
             (2750 + x_offset, 1600 + y_offset, 2850 + x_offset, 1800 + y_offset),
             (2750 + x_offset, 1500 + y_offset, 3050 + x_offset, 1650 + y_offset), # Town hall part
             (2900 + x_offset, 1650 + y_offset, 3049 + x_offset, 2599 + y_offset), # Flinders Street icon

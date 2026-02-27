@@ -169,7 +169,6 @@ for line in file:
     line = line.strip()
     lines_list.append(line)
 file.close()
-lines_list.append("Summer Start Metro Tunnel Service")
 
 file = open('utils\\datalists\\types.txt','r')
 types_list = []
@@ -338,7 +337,7 @@ async def printlog(text):
 # check if these things are on in the .env
 rareCheckerOn = False
 automatic_updates = False
-admin_users = [1002449671224041502, 780303451980038165, 634620519500480512, 581098452327464973, int(USER_ID)]
+admin_users = [1002449671224041502, 780303451980038165, 634620519500480512, 581098452327464973, 637885403101396994, int(USER_ID)]
 if config['RARE_SERVICE_CHECKER'] == 'ON':
     rareCheckerOn = True
 startupAchievements = False
@@ -1466,20 +1465,48 @@ async def tramsearch(ctx, tram: str):
         # embed.add_field(name='<a:botloading2:1261102206468362381> Loading trip data', value='⠀')
         embed_update = await ctx.edit_original_response(embed=embed)
 
+async def busOpsautocompletion(
+    interaction: discord.Interaction,
+    current: str
+) -> typing.List[app_commands.Choice[str]]:
+    # 1. Use set() to remove duplicates from busOps
+    # 2. Use sorted() to keep the list in alphabetical order
+    unique_operators = sorted(set(busOps))
+    
+    # 3. Return the filtered list (limited to 25 to prevent Discord API errors)
+    return [
+        app_commands.Choice(name=operator, value=operator)
+        for operator in unique_operators if current.lower() in operator.lower()
+    ][:25]
+
 import utils.bussearch as bussearch
 @search.command(name="bus", description="Search for a specific Bus")
 @app_commands.describe(bus="bus number or plate")
-async def bussearchcommand(ctx, bus: str):
+@app_commands.autocomplete(operator=busOpsautocompletion)
+async def bussearchcommand(ctx, bus: str, operator:str='Unknown'):
     await ctx.response.defer()
     bus = bus.upper()
+    if operator != "Unknown":
+        operatorlist = {"Dysons":'D',"Kinetic":'K',"Transit Systems":'TS',"Ventura":'V',"CDC":'C',"Skybus":'S',"McKenzies":'MK'}
+        if operator == 'Ventura Bus Lines':
+            operator = 'Ventura'
+        elif operator == 'Cdc Melbourne':
+            operator = 'CDC'
+        elif operator == 'McKenzies Tourist Service':
+            operator = 'McKenzies'
+
+        bus = operatorlist[operator] + bus
+    
+    await printlog(f'searching: {bus}')
     embed= await bussearch.search(bus, ctx)
     try:
         if embed == 'n':
-            await ctx.edit_original_response(content="Please use operator prefix before number")
+            await ctx.edit_original_response(content="Please use operator prefix before number:\nDysons: `D`\nKinetic: `K`\nTransit Systems: TS\nVentura: `V`\nCDC: `C` (also include depot letter eg: W,T or O)\nSkybus: `S`\nMcKenzies: `MK`")
         else:
             await ctx.edit_original_response(embed=embed)
 
     except Exception as e:
+        print(f'Error finding bus: {e}')
         await ctx.edit_original_response(content=f"can not find that bus in list")
 
 @bot.tree.command(name="import-bus-tram-data", description="ADMIN ONLY Import csv data for search bus and tram")
@@ -1490,7 +1517,7 @@ async def bussearchcommand(ctx, bus: str):
 ])
     
 async def importbustram(ctx, mode:str, file:discord.Attachment):
-    if ctx.user.id in admin_users or ctx.user.id == 581098452327464973:
+    if ctx.user.id in admin_users:
         await ctx.response.defer()
         try:
             await file.save(f'temp/{file.filename}')
@@ -1503,9 +1530,11 @@ async def importbustram(ctx, mode:str, file:discord.Attachment):
                 save_path = f'utils/tramsets.csv'
             shutil.copy(f'temp/{file.filename}', save_path)  
             await ctx.edit_original_response(content=f"Successfully imported data for {mode} to `{save_path}`")
+            await printlog(f"Successfully imported data for {mode} to `{save_path}`")
             os.remove(f'temp/{file.filename}') 
         except Exception as e:
                 await ctx.edit_original_response(content=f"Error importing data: {str(e)}")
+                await printlog(f'error importing bus/tram data: {str(e)}')
     else:
         await ctx.edit_original_response("You do not have permission to use this command.")
         return
@@ -3935,22 +3964,6 @@ async def logCanberraTram(ctx, line:str, number: str, type:str, start:str, end:s
     # Run in a separate task
     asyncio.create_task(log())
 
-
-
-async def busOpsautocompletion(
-    interaction: discord.Interaction,
-    current: str
-) -> typing.List[app_commands.Choice[str]]:
-    # 1. Use set() to remove duplicates from busOps
-    # 2. Use sorted() to keep the list in alphabetical order
-    unique_operators = sorted(set(busOps))
-    
-    # 3. Return the filtered list (limited to 25 to prevent Discord API errors)
-    return [
-        app_commands.Choice(name=operator, value=operator)
-        for operator in unique_operators if current.lower() in operator.lower()
-    ][:25]
-
 async def station_autocompletion(
     interaction: discord.Interaction,
     current: str
@@ -3962,15 +3975,16 @@ async def station_autocompletion(
     ][:25]
     
 @trainlogs.command(name="bus", description="Log a Bus you have been on")
-@app_commands.describe(number = "Bus number", type = 'Type of bus', date = "Date in DD/MM/YYYY format", line = 'bus route', start='Starting Stop', end = 'Ending Stop', hidemessage='Hide the message from other users, note this will not make the log private.')
+@app_commands.describe(number = "Bus number with prefix or number plate", type = 'Type of bus', date = "Date in DD/MM/YYYY format", line = 'bus route', start='Starting Stop', end = 'Ending Stop', hidemessage='Hide the message from other users, note this will not make the log private.')
 @app_commands.autocomplete(operator=busOpsautocompletion)
 @app_commands.autocomplete(start=station_autocompletion)
 @app_commands.autocomplete(end=station_autocompletion)
 
 async def logBus(ctx, line:str, number: str, start:str, end:str, operator:str='Unknown', date:str='today', type:str='Unknown', notes:str=None, hidemessage:bool=False):
     channel = ctx.channel
+    await ctx.response.defer(ephemeral=hidemessage)
     await printlog(date)
-    async def log(notes):
+    async def log(notes,type,operator):
         log_command(ctx.user.id, 'log-bus')
         await printlog("logging the bus")
 
@@ -3989,36 +4003,115 @@ async def logBus(ctx, line:str, number: str, start:str, end:str, operator:str='U
                     await ctx.edit_original_response(content=f'Invalid date: `{date}`\nMake sure to use a possible date.')
                     return
             except TypeError:
-                await ctx.response.send_message(f'Invalid date: {date}\nUse the form `dd/mm/yyyy`', ephemeral=True)
+                await ctx.edit_original_response(content=f'Invalid date: {date}\nUse the form `dd/mm/yyyy`', ephemeral=True)
                 return
-
-        set = number
-        
+        set = number.upper()
         # format notes so it dosnt break anything
         if notes:
             notes = re.sub(r'[^\x00-\x7F]+', '', notes)
             notes = notes.replace('\n', ' ')
             # notes = f'"{notes}"'
+        try:
+            await printlog("trying new version")
+            if set[0] == "D":
+                numbertest = set[1:]
+                operator = "Dysons"
+            elif set[0] == "V":
+                numbertest = set[1:]
+                operator = "Ventura"
+            elif set[0] == "K":
+                numbertest = set[1:]
+                operator = "Kinetic"
+            elif set[0] == "C":
+                numbertest = set[1:]
+                operator = "CDC"
+            elif set[0] == "S":
+                numbertest = set[1:]
+                operator = "Skybus"
+            elif set[:2] == "TS":
+                numbertest = set[2:]
+                operator = "Transit Systems"
+            elif set[:2] == "MK":
+                numbertest = set[2:]
+                operator = "McKenzies"
+            elif len(set) == 6:
+                operator = "platenumber"
+            if operator != "platenumber":
+                with open('utils/bussets.csv','r') as bussetsFile:
+                    reader = csv.reader(bussetsFile)
+                    for row in reader:
+                        if row[0] == numbertest and row[2] == operator:
+                            type = f'{row[4]} on {row[3]}'
+                            plate = row[1]
+                            await printlog(f"type: {type}\nplate:{plate}")
+            elif operator == "platenumber":
+                with open('utils/bussets.csv','r') as bussetsFile:
+                    reader = csv.reader(bussetsFile)
+                    for row in reader:
+                        if row[1] == set:
+                            type = f'{row[4]} on {row[3]}'
+                            plate = row[1]
+                            numbertest = row[0]
+                            operator = row[2]
+                            await printlog(f"type: {type}\nplate:{plate}")
+        except:
+            await printlog("reverting to old version")
+            try:
+                if operator == 'Ventura Bus Lines':
+                    operator = 'Ventura'
+                elif operator == 'Cdc Melbourne':
+                    operator = 'CDC'
+                elif operator == 'McKenzies Tourist Service':
+                    operator = 'McKenzies'
+                with open('utils/bussets.csv','r') as bussetsFile:
+                    reader = csv.reader(bussetsFile)
+                    for row in reader:
+                        if row[0] == set and row[2] == operator:
+                            type = f'{row[4]} on {row[3]}'
+                            plate = row[1]
+                            await printlog(f"type: {type}\nplate:{plate}")
+            except:
+                pass
+
+
 
         # Add bus to the list
         id = addBus(ctx.user.name, set, type, savedate, line, start.title(), end.title(), operator.title(), notes)
 
         embed = discord.Embed(title="Bus Logged",colour=bus_colour)
-        
-        embed.add_field(name="Operator", value=operator)
-        embed.add_field(name="Number", value=f'{set} ({type})')
+
         embed.add_field(name="Line", value=line)
+        if operator == "platenumber":
+            operator = "Unknown"
+        embed.add_field(name="Operator", value=operator)
+        try:
+            embed.add_field(name="Number", value=f'{numbertest}')
+        except:
+            embed.add_field(name="Number", value=f'{set}')
+        try:
+            embed.add_field(name="Number Plate", value=f'{plate}')
+        except:
+            pass
+        embed.add_field(name="Type", value=f'{type}')
         embed.add_field(name="Date", value=savedate)
         embed.add_field(name="Trip", value=f'{start.title()} to {end.title()}')
         if notes != None:
             embed.add_field(name="Notes", value=notes)
-        embed.set_footer(text=f"Log ID #{id}")
+        try:
+            image, credits = getImage(plate, False, 'bus')
+            if image:
+                embed.set_thumbnail(url=image)
+                embed.set_footer(text=f'Log ID #{id} | Photo by {credits}')
+            else:
+                embed.set_footer(text=f"Log ID #{id}")
+        except:
+            embed.set_footer(text=f"Log ID #{id}")
 
-        await ctx.response.send_message(embed=embed, ephemeral=hidemessage)
+        await ctx.edit_original_response(embed=embed)
         
                 
     # Run in a separate task
-    asyncio.create_task(log(notes))
+    asyncio.create_task(log(notes,type,operator))
 
 
 
@@ -6342,9 +6435,9 @@ async def list_schedule(ctx, channel: discord.TextChannel):
 async def about(ctx):
     await ctx.response.defer()
     log_command(ctx.user.id, 'about')
-    embed = discord.Embed(title="About", description=f"TrackPulse Vic is a Discord bot that allows users to log their train, and tram trips in Victoria, New South Wales, South Australia and Western Australia, along with any bus trips. It also provides the ability to get real-time line status updates for Metro Trains Melbourne, upcoming departures from Melbourne stations and the ability to search for information about a specific train, as well as a range of other features.\nOnline Since <t:{uptime}:R>", color=discord.Color.blue())
+    embed = discord.Embed(title="About", description=f"TrackPulse Vic is a Discord bot designed for users to log their train, tram or bus trips across Victoria, New South Wales, South Australia and Western Australia, allowing you to keep track of what transport you have taken and when. It also includes other features such as real-time tracking for Metro Trains Melbourne, upcoming departures for Melbourne stations and the ability to search for information on specific trains, and also fun games for you to play with your friends.\nOnline Since <t:{uptime}:R>", color=discord.Color.blue())
     embed.add_field(name="Developed by", value="[Xm9G](https://xm9g.net/)\n[Comeng17](https://github.com/Comeng17)", inline=True)
-    embed.add_field(name="Contributions by",value='[domino6658](https://github.com/domino6658)\n[AshKmo](https://github.com/AshKmo)\n[Richy](https://github.com/Richy023)\nsaladmunchr (hosting)\nAperture (NSW train info)\n',inline=True)
+    embed.add_field(name="Contributions by",value='[domino6658](https://github.com/domino6658)\n[AshKmo](https://github.com/AshKmo)\n[Richy](https://github.com/Richy023)\n[minirobinbin](https://github.com/minirobinbin)\nsaladmunchr (hosting)\nAperture (NSW train info)\n',inline=True)
     embed.add_field(name='Photos sourced from',value="[Victorian Rail Photos](https://victorianrailphotos.com/)")
     embed.add_field(name="Data Sources", value="[Transport Victoria](https://www.ptv.vic.gov.au/)\n", inline=True)
     embed.add_field(name='Website', value='https://trackpulsevic.xm9g.net')

@@ -6,8 +6,11 @@ dotenv.load_dotenv()
 VRP_BASE_URL = os.getenv('VRP_BASE_URL', 'http://victorianrailphotos.com')
 # THIS IS DIFFRNT TO THE ONE USED IN THE TRAIN PHOTO COMMAND!
 # THIS ONE ONLY RETURNS THE FIRST IMAGE AND ALSO REQUIRS CORRECT FORMATTING!!
-def getImage(number, thumbnail=False):
-    apiURL = f"{VRP_BASE_URL}/api/photos/{number}"
+def getImage(number, thumbnail=False, mode='train'):
+    if mode == 'train':
+        apiURL = f"{VRP_BASE_URL}/api/photos/{number}"
+    elif mode == 'bus':
+        apiURL = f"{VRP_BASE_URL}/api/photos/bus/{number}"
     
     if thumbnail:
         thummy = 'thumbnail'

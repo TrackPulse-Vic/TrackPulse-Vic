@@ -6,6 +6,8 @@ from dotenv import *
 from datetime import datetime
 import os
 
+from utils.trainImage import getImage
+
 config = dotenv_values(".env")
 TRANSPORT_VIC_API_KEY = config['TRANSPORT_VIC_API_KEY']
 
@@ -28,6 +30,9 @@ async def search(bus, ctx):
     elif bus[:2] == "TS":
         buss = bus[2:]
         data = getfleetsnumber(buss, "Transit Systems")
+    elif bus[:2] == "MK":
+        buss = bus[2:]
+        data = getfleetsnumber(buss, "McKenzies")
     elif len(bus) == 6:
         data = getfleets(bus)
     else:
@@ -49,6 +54,8 @@ async def search(bus, ctx):
         embed=discord.Embed(title=f"{data[0]} ({data[1]})", color=discord.Color.dark_green())
     elif data[2] == 'Skybus':
         embed=discord.Embed(title=f"{data[0]} ({data[1]})", color=discord.Color.red())
+    elif data[2] == 'McKenzies':
+        embed=discord.Embed(title=f"{data[0]} ({data[1]})", color=0x47A04E)
     else:
         embed=discord.Embed(title=f"{data[0]} ({data[1]})", color=discord.Color.light_gray())
     embed.add_field(name="Depot", value=data[7], inline=True)
@@ -71,6 +78,12 @@ async def search(bus, ctx):
             tripinfo += f"Route: {trip['route_id']} \n"
         embed.add_field(name="Current trip(s)", value=tripinfo,inline=False)
     embed.add_field(name="Deloyments", value=f"[transportvic.me](<https://transportvic.me/bus/tracker/fleet?fleet={bus}>)", inline=False)
+    
+    # get photo
+    image, credits = getImage(plate, False, 'bus')
+    if image:
+        embed.set_image(url=image)
+        embed.set_footer(text=f'Photo by {credits}')
     return embed
     
 
@@ -119,7 +132,7 @@ def bustracker(plate):
         print(f"Error: {response.status_code}")
 
 def getfleets(numberplate):
-    with open("utils/bussets.csv", "r") as file:
+    with open("utils/bussets.csv", "r", encoding='utf-8') as file:
         csv_reader = csv.reader(file)
         for row in csv_reader:
             if row[1] == numberplate:
