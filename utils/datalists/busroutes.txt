@@ -1,0 +1,519 @@
+200 Bulleen - City (Queen St)
+207 Doncaster SC - City (Queen St)
+270 Mitcham - Box Hill
+271 Ringwood - Box Hill Station
+273 The Pines SC - Nunawading Station
+279 Doncaster SC/Templestowe - Box Hill Station
+280 The Pines SC
+281 Box Hill Station - Templestowe
+282 The Pines SC
+284 Doncaster Park & Ride - Box Hill Station
+285 Camberwell SC - Doncaster Park & Ride
+293 Greensborough - Box Hill Station
+295 The Pines SC - Doncaster SC
+302 Box Hill Station - City (King/Lonsdale St)
+303 Ringwood North - City (Queen St)
+304 Doncaster SC - City (King/Lonsdale St)
+305 The Pines SC - City (King/Lonsdale Sts)
+309 The Pines SC - City (Queen St)
+318 Deep Creek - City (King/Lonsdale Sts)
+364 Warrandyte - Ringwood Station
+370 Ringwood Station - Mitcham Station
+668 Croydon Station - Ringwood Station
+669 Croydon Station - Ringwood Station
+901 Frankston - Melbourne Airport
+903 Mordialloc - Altona
+905 The Pines SC - City (King/Lonsdale Sts)
+906 Warrandyte - City (King/Lonsdale Sts)
+907 Mitcham - City (King/Lonsdale Sts)
+908 The Pines SC - City (King/Lonsdale Sts)
+200 Bulleen - City (Queen St)
+202 Yarra Bend - Melbourne University
+207 Doncaster SC - City (Queen St)
+234 Garden City - City (Queen Victoria Market)
+235 Fishermans Bend - City (Southern Cross Station)
+236 Garden City - City (Queen Victoria Market)
+237 Fishermans Bend - City (Southern Cross Station)
+246 Elsternwick - Clifton Hill
+250 La Trobe University - City (Queen St)
+251 Northland SC - City (Queen St)
+270 Mitcham - Box Hill
+279 Doncaster SC/Templestowe - Box Hill Station
+284 Doncaster Park & Ride - Box Hill Station
+285 Camberwell SC - Doncaster Park & Ride
+293 Greensborough - Box Hill Station
+302 Box Hill Station - City (King/Lonsdale St)
+304 Doncaster SC - City (King/Lonsdale St)
+305 The Pines SC - City (King/Lonsdale Sts)
+309 The Pines SC - City (Queen St)
+350 La Trobe University - City (Queen St)
+510 Ivanhoe Station - Essendon Station
+512 East Coburg - Strathmore Station
+903 Mordialloc - Altona
+905 The Pines SC - City (King/Lonsdale Sts)
+906 Warrandyte - City (King/Lonsdale Sts)
+907 Mitcham - City (King/Lonsdale Sts)
+908 The Pines SC - City (King/Lonsdale Sts)
+901 Frankston - Melbourne Airport
+902 Chelsea Railway Station - Airport West SC
+903 Mordialloc - Altona
+663 Belgrave - Lilydale
+664 Chirnside Park SC - Knox City SC
+670 Lilydale - Ringwood
+671 Chirnside Park SC - Croydon
+672 Chirnside Park SC - Croydon
+675 Chirnside Park SC - Mooroolbark
+677 Chirnside Park SC - Lilydale
+679 Chirnside Park SC - Ringwood
+680 Mooroolbark - Lilydale
+681 Knox City SC - Knox City SC
+682 Knox City SC - Knox City SC
+688 Upper Ferntree Gully - Croydon
+689 Montrose - Croydon Station
+690 Boronia - Croydon
+691 Boronia - Waverley Gardens SC
+693 Belgrave - Oakleigh
+694 Mount Dandenong - Belgrave
+695 Gembrook - Belgrave
+697 Belgrave South - Belgrave
+699 Upwey - Belgrave
+732 Upper Ferntree Gully - Box Hill Station
+734 Glen Waverley - Glen Iris
+735 Nunawading - Box Hill Station
+736 Blackburn - Mitcham
+737 Monash University - Croydon
+738 Knox City - Mitcham
+740 Vermont East - Mitcham
+742 Chadstone SC - Ringwood
+753 Bayswater - Glen Waverley
+754 Glen Waverley - Rowville
+755 Knox City SC - Bayswater
+765 Box Hill - Mitcham
+693 Belgrave - Oakleigh
+701 Bentleigh - Oakleigh
+703 Blackburn - Middle Brighton
+704 Westall Station - Oakleigh Station
+706 Chelsea Railway Station - Mordialloc Shopping Centre
+733 Box Hill - Oakleigh
+737 Monash University - Croydon
+766 Box Hill Station - Burwood
+767 Box Hill Station - Southland SC
+900 Stud Park SC (Rowville) - Caulfield
+201 Box Hill Station - Deakin University
+663 Belgrave - Lilydale
+664 Chirnside Park SC - Knox City SC
+670 Lilydale - Ringwood
+671 Chirnside Park SC - Croydon
+672 Chirnside Park SC - Croydon
+675 Chirnside Park SC - Mooroolbark
+677 Chirnside Park SC - Lilydale
+679 Chirnside Park SC - Ringwood
+680 Mooroolbark - Lilydale
+681 Knox City SC - Knox City SC
+682 Knox City SC - Knox City SC
+688 Upper Ferntree Gully - Croydon
+689 Montrose - Croydon Station
+690 Boronia - Croydon
+691 Boronia - Waverley Gardens SC
+693 Belgrave - Oakleigh
+694 Mount Dandenong - Belgrave
+695 Gembrook - Belgrave
+695F Fountain Gate - Gembrook
+697 Belgrave South - Belgrave
+699 Upwey - Belgrave
+732 Upper Ferntree Gully - Box Hill Station
+734 Glen Waverley - Glen Iris
+735 Nunawading - Box Hill Station
+736 Blackburn - Mitcham
+737 Monash University - Croydon
+738 Knox City - Mitcham
+740 Vermont East - Mitcham
+742 Chadstone SC - Ringwood Station
+745 Knox City SC - Bayswater
+753 Bayswater - Glen Waverley
+754 Glen Waverley - Rowville
+755 Knox City SC - Bayswater
+757 Scoresby - Knox City SC
+758 Knoxfield - Knox City SC
+765 Box Hill - Mitcham
+967 Croydon Station - Glen Waverley Station
+663 Belgrave - Lilydale
+688 Upper Ferntree Gully - Croydon
+690 Boronia - Croydon
+693 Belgrave - Oakleigh
+694 Mount Dandenong - Belgrave
+695 Gembrook - Belgrave
+695F Fountain Gate - Gembrook
+696 Olinda - Monbulk
+697 Belgrave South - Belgrave
+699 Upwey - Belgrave
+732 Upper Ferntree Gully - Box Hill Station
+742 Chadstone SC - Ringwood Station
+526 Reservoir - Coburg
+527 Gowrie - Northland SC
+548 Kew - La Trobe University
+549 Ivanhoe - Northland SC
+550 Northland SC - La Trobe University
+551 Heidelberg - La Trobe University
+951 Glenroy Station - Brunswick Station
+953 Craigieburn - Broadmeadows Station
+959 Broadmeadows Station - City (Queen St)
+475 Sunbury Station - Diggers Rest Station
+481 Mount Lion - Sunbury Station
+483 Moonee Ponds - Sunbury
+485 Wilsons Lane - Sunbury Station
+486 Rolling Meadows - Sunbury Station
+487 Killara Heights - Sunbury Station
+488 Jacksons Hill - Sunbury Station
+489 Canterbury Hills - Sunbury Station
+627 Moorabbin Station - Chadstone SC
+631 Waverley Gardens SC - Southland SC
+705 Springvale - Mordialloc
+708 Carrum Station - Hampton Station
+709 Noble Park Station - Mordialloc
+800 Chadstone SC - Dandenong
+802 Chadstone SC - Dandenong
+804 Chadstone SC - Dandenong
+811 Brighton - Dandenong
+812 Brighton - Dandenong
+813 Waverley Gardens SC - Dandenong
+816 Noble Park Station - Keysborough South
+822 Sandringham - Chadstone SC
+823 Southland SC - North Brighton
+824 Keysborough - Moorabbin
+825 Southland SC - Moorabbin
+828 Berwick Station - Hampton Station
+843 Endeavour Hills - Dandenong Station
+844 Doveton - Dandenong
+845 Endeavour Hills - Dandenong Station
+848 Brandon Park SC - Dandenong
+850 Glen Waverley - Dandenong
+857 Chelsea Station - Dandenong Station
+858 Aspendale Gardens - Edithvale Railway Station
+861 Endeavour Hills - Dandenong Station
+862 Chadstone SC - Dandenong
+863 Cranbourne West - Endeavour Hills SC
+885 Springvale - Glen Waverley
+786 St Andrews Beach - Rye
+787 Sorrento - Rosebud
+788 Portsea - Frankston
+887 Rosebud - Frankston
+760 Cranbourne Station - Seaford Station
+770 Karingal - Frankston
+771 Langwarrin - Frankston
+772 Eliza Heights - Frankston
+773 Frankston South - Frankston
+774 Delacombe Park - Frankston
+775 Lakewood - Frankston
+776 Pearcedale - Frankston
+777 McClelland Drive - Karingal  SC
+778 Carrum Downs - Kananook Station
+779 Belvedere - Frankston
+780 Carrum Station - Frankston Station
+781 Dromana - Frankston
+782 Flinders - Frankston
+783 Hastings - Frankston
+784 Mornington - Frankston
+785 Mornington - Frankston Station
+832 Carrum Downs - Frankston
+833 Carrum Station - Frankston Station
+201 Box Hill Station - Deakin University
+663 Belgrave - Lilydale
+664 Chirnside Park SC - Knox City SC
+670 Lilydale - Ringwood
+671 Chirnside Park SC - Croydon
+672 Chirnside Park SC - Croydon
+675 Chirnside Park SC - Mooroolbark
+677 Chirnside Park SC - Lilydale
+679 Chirnside Park SC - Ringwood
+680 Mooroolbark - Lilydale
+681 Knox City SC - Knox City SC
+682 Knox City SC - Knox City SC
+688 Upper Ferntree Gully - Croydon
+689 Montrose - Croydon Station
+690 Boronia - Croydon
+691 Boronia - Waverley Gardens SC
+693 Belgrave - Oakleigh
+694 Mount Dandenong - Belgrave
+695 Gembrook - Belgrave
+695F Fountain Gate - Gembrook
+697 Belgrave South - Belgrave
+699 Upwey - Belgrave
+732 Upper Ferntree Gully - Box Hill Station
+734 Glen Waverley - Glen Iris
+735 Nunawading - Box Hill Station
+736 Blackburn - Mitcham
+737 Monash University - Croydon
+738 Knox City - Mitcham
+740 Vermont East - Mitcham
+742 Chadstone SC - Ringwood Station
+753 Bayswater - Glen Waverley
+754 Glen Waverley - Rowville
+755 Knox City SC - Bayswater
+765 Box Hill - Mitcham
+246 Elsternwick - Clifton Hill
+600 Southland SC - St Kilda Station
+603 Brighton Beach - Burnley Station
+604 Elsternwick Station - Anzac Station
+922 Southland SC - St Kilda Station
+923 Southland SC - St Kilda Station
+200 Bulleen - City (Queen St)
+207 Doncaster SC - City (Queen St)
+250 La Trobe University - City (Queen St)
+251 Northland SC - City (Queen St)
+350 La Trobe University - City (Queen St)
+901 Frankston - Melbourne Airport
+902 Chelsea Railway Station - Airport West SC
+215 Caroline Springs - Highpoint SC
+216 Sunshine Station - City (Queen St)
+220 Sunshine Station - City (Queen St)
+223 Yarraville - Highpoint SC
+232 Altona North - City (Queen Victoria Market)
+234 Garden City - City (Queen Victoria Market)
+235 Fishermans Bend - City (Southern Cross Station)
+236 Garden City - City (Queen Victoria Market)
+237 Fishermans Bend - City (Southern Cross Station)
+426 Caroline Springs - Sunshine Station
+429 Sunshine Station
+903 Mordialloc - Altona
+420 Watergardens Station - Sunshine Station
+444 Aintree - Rockbank Station
+453 Melton - Melton Station
+454 Cobblebank Station - Melton Station
+455 Micasa Rise - Melton Station
+456 Sunshine Station - Melton
+457 Melton - Melton Station
+458 Kurunjang - Melton Station
+459 Arnolds Creek - Melton Station
+941 Watergardens Station - Sunshine Station
+943 Melton - Watergardens Station
+503 Essendon - East Brunswick
+504 Clifton Hill - Moonee Ponds
+505 Melbourne University - Moonee Ponds
+506 Moonee Ponds - Westgarth
+508 Alphington - Moonee Ponds
+509 Brunswick West - Barkly Square SC
+510 Ivanhoe Station - Essendon Station
+512 East Coburg - Strathmore Station
+546 Melbourne University - Heidelberg Station
+552 North East Reservoir - Northcote Plaza
+553 West Preston - Preston
+558 Reservoir (clockwise) - Reservoir (anti-clockwise)
+567 Northcote - Regent
+609 Kew/Hawthorn - Fairfield
+418 Caroline Springs - St Albans Station
+419 St Albans Station - Watergardens Station
+421 St Albans Station - Watergardens Station
+423 Brimbank Central SC - St Albans Station
+424 Brimbank Central SC - St Albans Station
+425 St Albans Station - Watergardens Station
+460 Caroline Springs Station - Watergardens Station
+461 Caroline Springs Town Centre - Watergardens Station
+462 Caroline Springs Station - Watergardens Station
+463 Hillside - Watergardens Station
+465 Keilor Park - Essendon Station
+467 Aberfeldie - Moonee Ponds Station
+468 Highpoint SC - Essendon
+469 Keilor East - Moonee Ponds
+476 Watergardens Station - Moonee Ponds
+683 Warburton - Chirnside Park SC
+627 Moorabbin Station - Chadstone SC
+631 Waverley Gardens SC - Southland SC
+705 Springvale - Mordialloc
+708 Carrum Station - Hampton Station
+709 Noble Park Station - Mordialloc
+733 Box Hill - Oakleigh
+800 Chadstone SC - Dandenong
+802 Chadstone SC - Dandenong
+804 Chadstone SC - Dandenong
+811 Brighton - Dandenong
+812 Brighton - Dandenong
+813 Waverley Gardens SC - Dandenong
+814 Springvale South - Dandenong
+816 Noble Park Station - Keysborough South
+822 Sandringham - Chadstone SC
+823 Southland SC - North Brighton
+824 Keysborough - Moorabbin
+825 Southland SC - Moorabbin
+828 Berwick Station - Hampton Station
+843 Endeavour Hills - Dandenong Station
+844 Doveton - Dandenong
+845 Endeavour Hills - Dandenong Station
+848 Brandon Park SC - Dandenong
+850 Glen Waverley - Dandenong
+857 Chelsea Station - Dandenong Station
+858 Aspendale Gardens - Edithvale Railway Station
+861 Endeavour Hills - Dandenong Station
+862 Chadstone SC - Dandenong
+863 Cranbourne West - Endeavour Hills SC
+885 Springvale - Glen Waverley
+900 Stud Park SC (Rowville) - Caulfield
+978 Dandenong Station - Clayton Station
+979 Dandenong Station - Clayton Station
+981 Cranbourne - Dandenong Station
+982 Cranbourne - Dandenong Station
+301 Reservoir Station - La Trobe University
+343 Hurstbridge Station - Greensborough
+356 Wollert East - Epping Station
+357 Wollert West - Thomastown Station
+358 Wollert - Epping Station
+381 Diamond Creek Station - Mernda Station
+382 Whittlesea - Northland SC
+383 Palisades - University Hill
+384 Kinglake - Whittlesea
+385 Mernda Station/Whittlesea - Greensborough
+386 Mernda Station - Bundoora RMIT
+387 Mernda Station - Bundoora RMIT
+388 Mernda Station
+389 Mernda Station
+390 Mernda Station - Craigieburn Station
+513 Eltham - Glenroy
+514 Eltham - Glenroy
+517 St Helena - Northland SC
+518 St Helena West - Greensborough
+554 Lalor
+555 Northland SC - Epping Plaza SC
+556 Epping Plaza SC - Northland SC
+557 Thomastown
+559 Thomastown Station
+561 Macleod - Pascoe Vale
+564 South Morang Station - Bundoora RMIT
+566 Lalor - Northland SC
+569 Epping Plaza SC - South Morang Station
+570 Thomastown - Bundoora RMIT
+577 Epping Plaza SC - South Morang Station
+578 Eltham Station - Warrandyte
+579 Eltham - Warrandyte
+580 Eltham Station - Diamond Creek
+582 Eltham Station
+477 Broadmeadows Station - Moonee Ponds
+478 Melbourne Airport - Airport West SC
+479 Sunbury Station - Airport West SC
+482 Melbourne Airport - Airport West SC
+484 Roxburgh Park - Broadmeadows
+490 Gowanbrae - Airport West
+525 Donnybrook Station - Craigieburn Station
+534 Coburg - Glenroy
+536 Gowrie - Glenroy
+538 Broadmeadows - Somerset Estate
+540 Upfield - Broadmeadows
+541 Craigieburn North (Mt Ridley Rd) - Broadmeadows Station
+542 Roxburgh Park - Pascoe Vale
+543 Craigieburn Central - Roxburgh Park
+684 Ringwood - Eildon
+685 Lilydale - Healesville
+965 Healesville - Lilydale Station
+601 Huntingdale Station - Monash University (Clayton)
+605 Gardenvale - City (Queen Victoria Market)
+606 Fishermans Bend - Elsternwick Station
+612 Box Hill Station - Chadstone SC
+623 Glen Waverley - St Kilda
+624 Oakleigh - Kew
+625 Elsternwick - Chadstone SC
+626 Chadstone - Middle Brighton
+630 Monash University - Elwood
+900 Stud Park SC (Rowville) - Caulfield
+789 Langwarrin - Frankston Station
+790 Frankston Station - Langwarrin
+791 Cranbourne Station - Frankston Station
+792 Pearcedale - Cranbourne Station
+795 Warneet - Cranbourne
+796 Clyde - Cranbourne Station
+798 Clyde North - Cranbourne Park SC
+799 The Avenue Village SC - Merinda Park Station
+881 Merinda Park Station - Clyde North
+890 Dandenong Station - Lynbrook Station
+891 Lynbrook Station - Fountain Gate SC
+892 Casey Central SC - Dandenong Station
+893 Cranbourne Park SC - Dandenong Station
+894 Amberly Park - Hallam Station
+895 Narre Warren South - Fountain Gate SC
+897 Lynbrook Station - Clyde North
+898 Clyde North - Cranbourne Station
+831 Clyde - Berwick Station
+834 Berwick Station - Fountain Gate SC
+835 Berwick Station - Fountain Gate SC
+836 Eden Rise SC - Berwick Station
+837 Beaconsfield East - Berwick Station
+838 Emerald - Fountain Gate SC
+839 North Berwick - Berwick Station
+840 Gembrook - Pakenham Station
+841 Cranbourne - Narre Warren North
+842 Endeavour Hills SC - Fountain Gate SC
+846 Eden Rise SC - Berwick Station
+847 The Avenue Village SC - Berwick Station
+888 Clyde - Berwick Station
+889 Clyde North - Berwick Station
+899 The Avenue Village SC - Berwick Station
+925 Officer South - Pakenham Station
+926 Pakenham Station - Fountain Gate SC
+927 Pakenham North - Pakenham Station
+928 Berwick Station - Pakenham Station
+929 Pakenham North - Pakenham Station
+241 Yarra Bend - North Melbourne Station
+400 Laverton Station - Sunshine Station
+402 Footscray Station - East Melbourne
+404 Footscray Station - Moonee Ponds
+420 Watergardens Station - Sunshine Station
+422 Brimbank Central SC - Sunshine Station
+427 Sunshine West - Sunshine Station
+428 Sunshine West - Sunshine Station
+431 Kingsville - Yarraville
+432 Yarraville - Newport
+444 Aintree - Rockbank Station
+453 Melton - Melton Station
+456 Sunshine Station - Melton
+471 Williamstown - Sunshine Station
+472 Moonee Ponds - Williamstown
+941 Watergardens Station - Sunshine Station
+943 Melton - Watergardens Station
+947 Newport Station - Footscray
+949 Williams Landing Station
+150 Tarneit Station - Williams Landing Station
+151 Tarneit Station - Williams Landing Station
+152 Williams Landing Station - Tarneit Station
+153 Werribee Station - Williams Landing Station
+154 Tarneit Station - Laverton Station
+160 Hoppers Crossing Station - Tarneit Station
+161 Werribee Station - Hoppers Crossing Station
+166 Wyndham Vale Station - Hoppers Crossing Station
+167 Hoppers Crossing Station - Tarneit Station
+170 Werribee Station - Tarneit Station
+180 Werribee Station - Tarneit Station
+181 Werribee Station - Hoppers Crossing Station
+182 Werribee Station - Tarneit Station
+190 Wyndham Vale Station - Werribee Station
+191 Jubilee Estate - Werribee Station
+192 Wyndham Vale Station - Werribee Station
+194 Harpley - Wyndham Vale Station
+400 Laverton Station - Sunshine Station
+406 Footscray Station - Keilor East
+407 Avondale Heights - Highpoint SC
+408 St Albans Station - Highpoint SC
+409 Yarraville - Highpoint SC
+410 Sunshine Station - Footscray
+411 Laverton Station - Footscray
+412 Laverton Station - Footscray
+414 Laverton Station - Footscray
+415 Laverton Station - Williamstown
+417 Laverton Station - Laverton North
+439 Werribee South - Werribee Station
+441 Riverwalk Estate - Werribee Station
+443 Werribee Station - Werribee Station (Clockwise)
+494 Point Cook South - Williams Landing Station
+495 Point Cook South - Williams Landing Station
+496 Sanctuary Lakes - Laverton Station
+497 Saltwater Coast Estate - Williams Landing Station
+498 Hoppers Crossing Station - Laverton Station
+501 Donnybrook Station - Craigieburn Station
+511 Mandalay - Craigieburn Station
+524 Kalkallo - Peppercorn Hill
+528 Craigieburn Central SC - Craigieburn Station
+529 Craigieburn North - Craigieburn Station
+530 Coburg - Campbellfield
+531 North Coburg - Upfield Station
+532 Broadmeadows - Craigieburn
+533 Craigieburn North - Craigieburn
+537 Craigieburn Central SC - Craigieburn Station
+544 Roxburgh Park Station - Craigieburn Station
+452 Eynesbury - Melton Station

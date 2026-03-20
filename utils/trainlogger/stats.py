@@ -36,14 +36,24 @@ def topStats(user, stat, year, mode):
                 train_set = row[1]  # Changed to 'train_set' since 'set' is a Python keyword
                 train_type = row[2]
                 pair = (start_station, end_station)
-                
-                # Update counters
-                line_counter.update([line])
-                station_counter.update([start_station, end_station])
-                set_counter.update([train_set])
-                type_counter.update([train_type])
-                date_counter.update([date])
-                pair_counter.update([pair])
+
+                # Only update counters if value is not 'unknown' or 'N/A' (case-insensitive)
+                if line and line.lower() not in ['unknown', 'n/a']:
+                    line_counter.update([line])
+                if start_station and start_station.lower() not in ['unknown', 'n/a']:
+                    station_counter.update([start_station])
+                if end_station and end_station.lower() not in ['unknown', 'n/a']:
+                    station_counter.update([end_station])
+                if train_set and train_set.lower() not in ['unknown', 'n/a']:
+                    set_counter.update([train_set])
+                if train_type and train_type.lower() not in ['unknown', 'n/a']:
+                    type_counter.update([train_type])
+                if date and date.lower() not in ['unknown', 'n/a']:
+                    date_counter.update([date])
+                if (start_station and end_station and
+                    start_station.lower() not in ['unknown', 'n/a'] and
+                    end_station.lower() not in ['unknown', 'n/a']):
+                    pair_counter.update([pair])
 
         # Get the 10 most common entries
         most_common_lines = line_counter.most_common(100000)
@@ -297,6 +307,10 @@ def lowestDate(user, mode):
     # Remove dashes from each date and convert them to integers
     cleaned_dates = [int(date.replace('-', '')) for date in dates]
 
+    # Empty files/users with no logs should be treated as missing data by callers.
+    if not cleaned_dates:
+        raise FileNotFoundError(f'No log entries found for user {user} in mode {mode}')
+
     # Find the lowest number in the cleaned_dates list
     lowest_number = min(cleaned_dates)
 
@@ -321,6 +335,10 @@ def highestDate(user, mode):
 
     # Remove dashes from each date and convert them to integers
     cleaned_dates = [int(date.replace('-', '')) for date in dates]
+
+    # Empty files/users with no logs should be treated as missing data by callers.
+    if not cleaned_dates:
+        raise FileNotFoundError(f'No log entries found for user {user} in mode {mode}')
 
     # Find the highest number in the cleaned_dates list
     highest_number = max(cleaned_dates)
@@ -625,7 +643,7 @@ def topOperators(user):
                 
     return output
 
-def setlist(user, train, summary:bool = False):
+def setlist(user, train, summary:bool = False): # probably shouldn't make this hard coded but use the trainsets csv.
     # List of items
     if train == "X'Trapolis 100":
         sets = [
@@ -1089,3 +1107,44 @@ def getTotalTrips(user='all', mode='all'):
             print(f"Error reading {filename}: {e}")
             line_count = 0
         return line_count
+    
+def streak(user, mode):
+    """
+    Returns the max and current streak for the chosen user.
+    """
+    if mode == 'train':
+        filename = f'utils/trainlogger/userdata/{user}.csv'
+    else:
+        filename = f'utils/trainlogger/userdata/{mode}/{user}.csv'
+    try:
+        df = pd.read_csv(filename, on_bad_lines='skip')
+        date_series = pd.to_datetime(df.iloc[:, 3], format='mixed', dayfirst=True, errors='coerce')
+        unique_dates = sorted([d for d in date_series.unique() if pd.notna(d)])
+        
+        if not unique_dates:
+            return 0, 0
+        
+        streaks = []
+        currentStreak = 1
+        
+        for i in range(1, len(unique_dates)):
+            if (unique_dates[i] - unique_dates[i-1]).days == 1:
+                currentStreak += 1
+            else:
+                streaks.append(currentStreak)
+                currentStreak = 1
+        
+        streaks.append(currentStreak)
+        
+        # heck if the most recent trip was today or yesterday
+        today = pd.Timestamp.now().normalize()
+        yesterday = today - pd.Timedelta(days=1)
+        last_trip_date = unique_dates[-1].normalize()
+        
+        current_streak = streaks[-1] if last_trip_date in [today, yesterday] else 0
+        
+        return max(streaks), current_streak
+
+    except Exception as e:
+        print(f"Error getting streak for {user}: {e}")
+        return 0, 0

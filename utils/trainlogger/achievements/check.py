@@ -516,7 +516,7 @@ def checkAchievements(user):
     station_pairs = {
         ('Southern Cross', 'Swan Hill'): '28',
         ('Riversdale', 'Willison'): '34',
-        ('Werribee', 'Frankston'): '36',
+        ('Werribee', 'Sandringham'): '36',
         ('Sunbury', 'East Pakenham'): '42'
 
     }

@@ -831,4 +831,57 @@ def editRow(username, logid, mode, line:str='nochange', number:str='nochange', s
             return data[row_index]
         
         return 'invalid id did not show up'
+    
+def editRowBus(username, logid, mode, line:str='nochange', number:str='nochange', start:str='nochange', end:str='nochange', date:str='nochange', traintype:str='auto',operator:str='nochange', notes:str='nochange'):
+    if mode == 'train':
+        filename = f"utils/trainlogger/userdata/{username}.csv"
+    else:
+        filename = f"utils/trainlogger/userdata/{mode}/{username}.csv"
+
+    # Open the CSV file and read the data
+    with open(filename, 'r+', newline='') as file:
+        data = file.readlines()
+
+        # Find the row to edit
+        row_index = None
+        for i, row in enumerate(data):
+            if row.split(',')[0] == f'#{logid}':
+                row_index = i
+                break
+
+        if row_index is not None:
+            # Split the row into fields
+            fields = data[row_index].strip().split(',')
+
+            # Update fields that aren't 'nochange'
+            if line != 'nochange':
+                fields[4] = line
+            if number != 'nochange':
+                fields[1] = number
+            if start != 'nochange':
+                fields[5] = start
+            if end != 'nochange':
+                fields[6] = end
+            if date != 'nochange':
+                fields[3] = date
+            if traintype != 'auto':
+                fields[2] = traintype
+            if notes != 'nochange':
+                fields[8] = notes
+            if operator != 'nochange':
+                fields[7] = operator
+
+            # Reconstruct the row
+            data[row_index] = ','.join(fields) + '\n'
+
+            # Write all data back to file
+            file.seek(0)
+            file.truncate()
+            file.writelines(data)
+
+            return data[row_index]
+        
+        return 'invalid id did not show up'
+
+
 
