@@ -3368,8 +3368,8 @@ async def NSWstation_autocompletion(
 
 @app_commands.choices(line=[
         app_commands.Choice(name="T1 North Shore & Western Line", value="T1"),
-        app_commands.Choice(name="T2 Inner West & Leppington Line", value="T2"),
-        app_commands.Choice(name="T3 Bankstown Line", value="T3"),
+        app_commands.Choice(name="T2 Leppington & Inner West Line", value="T2"),
+        app_commands.Choice(name="T3 Liverpool & Inner West", value="T3"),
         app_commands.Choice(name="T4 Eastern Suburbs & Illawarra Line", value="T4"),
         app_commands.Choice(name="T5 Cumberland Line", value="T5"),
         app_commands.Choice(name="T6 Lidcombe & Bankstown Line", value="T6"),
@@ -3377,7 +3377,7 @@ async def NSWstation_autocompletion(
         app_commands.Choice(name="T8 Airport & South Line", value="T8"),
         app_commands.Choice(name="T9 Northern Line", value="T9"),
         
-        app_commands.Choice(name="Metro North West Line", value="Metro North West Line"),
+        app_commands.Choice(name="M1 North West & Bankstown Line", value="M1"),
 
         app_commands.Choice(name="Blue Mountains Line", value="Blue Mountains Line"),
         app_commands.Choice(name="Central Coast & Newcastle Line", value="Central Coast & Newcastle Line"),
