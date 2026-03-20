@@ -3368,7 +3368,7 @@ async def NSWstation_autocompletion(
 
 @app_commands.choices(line=[
         app_commands.Choice(name="T1 North Shore & Western Line", value="T1"),
-        app_commands.Choice(name="T2 Leppington & Inner West Line", value="T2"),
+        app_commands.Choice(name="T2 Leppington & Inner West Lin", value="T2"),
         app_commands.Choice(name="T3 Liverpool & Inner West", value="T3"),
         app_commands.Choice(name="T4 Eastern Suburbs & Illawarra Line", value="T4"),
         app_commands.Choice(name="T5 Cumberland Line", value="T5"),
