@@ -52,7 +52,7 @@ class MapImageHandler:
         self.path = map_image_path
         print('Initalised the map maker')
         
-    def highlight_map(self, station_pairs, output_path, stations):
+    def highlight_map(self, station_pairs, output_path, stations, no_compression):
         """
         Creates a white cover over the entire map except for holes where the stations and lines are
         
@@ -201,7 +201,8 @@ class MapImageHandler:
         # modified_map = crop(modified_map)
         legend_path = self.path.replace("/map/","/map/legends/")
         modified_map = legend(modified_map, legend_path)
-        modified_map = compress(modified_map)
+        if not no_compression:
+            modified_map = compress(modified_map)
         print('Saving')
         modified_map.save(output_path)
         print('Done')

@@ -117,7 +117,7 @@ lines_dictionary_log_train_map_post_munnel = {
 }
 
 lines_dictionary_log_sydney_tram_map = {
-    'L1': [['Central', 'Capitol Square', "Paddy's Markets", 'Exhibition Centre', 'Convention', 'Pyrmont Bay', 'John Street Square', 'Fish Market', 'Wentworth Park', 'Glebe', 'Jubilee Park', 'Rozelle Bay', 'Lilyfield', 'Leichardt North', 'Hawthorne', 'Marion', 'Taveners Hill', 'Lewisham West', 'Waratah Mills', 'Arlington', 'Dulwich Grove', 'Dulwich Hill'], ptv_grey],
+    'L1': [['Central', 'Capitol Square', "Paddy's Markets", 'Exhibition Centre', 'Convention', 'Pyrmont Bay', 'John Street Square', 'Fish Market', 'Wentworth Park', 'Glebe', 'Jubilee Park', 'Rozelle Bay', 'Lilyfield', 'Leichhardt North', 'Hawthorne', 'Marion', 'Taveners Hill', 'Lewisham West', 'Waratah Mills', 'Arlington', 'Dulwich Grove', 'Dulwich Hill'], ptv_grey],
     'L2': [['Randwick', 'UNSW High Street', 'Wansey Road', 'Royal Randwick', 'Moore Park', 'Surrey Hills', 'Central', 'Haymarket', 'Chinatown', 'Town Hall', 'QVB', 'Wynyard', 'Bridge Street', 'Circular Quay'],ptv_grey],
     'L3': [['Juniors Kingsford', 'Kingsford', 'UNSW Anzac Parade', 'Kensington', 'ES Marks', 'Moore Park', 'Surrey Hills', 'Central', 'Haymarket', 'Chinatown', 'Town Hall', 'QVB', 'Wynyard', 'Bridge Street', 'Circular Quay'], ptv_grey],
     'L4': [['Westmead', 'Westmead Hospital', 'Childrens Hospital', 'Ngara', 'Benaud Oval', 'Fennell Street', 'Prince Alfred Square', 'Church Street', 'Parramatta Square', 'Robin Thomas', 'Tramway Avenue', 'Rosehill Gardens', 'Yallamundi', 'Dundas', 'Telopea', 'Carlingford'], ptv_grey],

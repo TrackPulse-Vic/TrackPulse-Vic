@@ -23,7 +23,7 @@
 42,Metro Tunnel Master,Ride the entire Metro Tunnel from Sunbury to East Pakenham
 27,Train Type Titan,Ride all different types of trains in one day
 34,Shortest Trip,Ride from Riversdale to Willison - The shortest distance between stations
-36,City Crosser,Ride on a single train all the way from Werribee to Frankston (or Sandringham after the Metro Tunnel opens)
+36,City Crosser,Ride on a single train all the way from Werribee to Sandringham (or Frankston before the Metro Tunnel opened)
 39,Altona Loop,Visit every station on the Altona Loop
 35,All Metro Lines,Ride to the end of all Metro lines in one day (excluding Stony Point)
 17,Gauge Guru,Ride on a standard gauge VLocity
@@ -68,6 +68,3 @@
 208,Hangman Great Player,Have a 75% accuracy in the hangman game with more than 50 rounds played
 207,Hangman Master,Have a 90% accuracy in the hangman game with more than 50 rounds played
 209,Hangman God Player,Have a 99% accuracy in the hangman game with more than 50 rounds played
-1000,Your first train submission,Submit your first train photo
-1001,Your first guessing game submission,Submit your first guess in the guessing game
-1003,First photo,Submit a photo of a train that dosn't have a photo yet

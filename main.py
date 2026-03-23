@@ -1,4 +1,5 @@
 from utils.locationFromNumber import GTFSgetTrainLocation
+from utils.trainlogger.stats import streak
 
 
-print(GTFSgetTrainLocation('N452', 'vline'))
+print(streak('xm9g','tram'))
