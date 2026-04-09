@@ -40,6 +40,7 @@ import typing
 from re import A
 import traceback
 import os
+import zipfile
 from pathlib import Path
 import git
 import pandas as pd
@@ -332,6 +333,14 @@ STARTUP_CHANNEL_ID = int(config['STARTUP_CHANNEL_ID']) # channel id to send the 
 RARE_SERVICE_CHANNEL_ID = int(config['RARE_SERVICE_CHANNEL_ID'])
 USER_ID = config['USER_ID']
 
+CITY_ROLE_PANEL_ENABLED = config.get('CITY_ROLE_PANEL_ENABLED', 'OFF') == 'ON'
+CITY_ROLE_CHANNEL_ID = int(config.get('CITY_ROLE_CHANNEL_ID', str(STARTUP_CHANNEL_ID)))
+CITY_ROLE_ID = int(config.get('CITY_ROLE_ID', '0'))
+CITY_ROLE_PANEL_CUSTOM_ID = 'city_role_panel_claim_v1'
+CITY_ROLE_PANEL_REMOVE_CUSTOM_ID = 'city_role_panel_remove_v1'
+CITY_ROLE_DURATION_SECONDS = 21600 # six hors
+CITY_ROLE_DB_PATH = str((Path(__file__).resolve().parent / 'userdata' / 'city_role_panel.db'))
+
 bot = commands.Bot(command_prefix=commands.when_mentioned, intents=discord.Intents.default())
 log_channel = bot.get_channel(STARTUP_CHANNEL_ID)
 
@@ -481,6 +490,9 @@ async def stop_webserver():
 
 @bot.event
 async def on_ready():
+    init_city_role_db()
+    bot.add_view(CityRolePanelView())
+
     # download the trainset data     
     csv_url = "https://victorianrailphotos.com/api/trainsets.csv"
     save_location = "utils/trainsets.csv"
@@ -508,11 +520,21 @@ async def on_ready():
     except Exception as e:
         await printlog(f'Error: {e}\n make sure the bot has premission to send in the startup channel')
         return
+
+    try:
+        await ensure_city_role_panel_message()
+    except Exception as e:
+        await printlog(f'City role panel setup failed: {e}')
+
+    if CITY_ROLE_PANEL_ENABLED and not city_role_expiry_loop.is_running():
+        city_role_expiry_loop.start()
     
-    trainTimleyCheckerLoop.start()  # Start the train timley checker loop
+    if not trainTimleyCheckerLoop.is_running():
+        trainTimleyCheckerLoop.start()  # Start the train timley checker loop
     
     try:
-        task_loop.start()
+        if not task_loop.is_running():
+            task_loop.start()
     except:
         await printlog("WARNING: Rare train checker is not enabled!")
         await channel.send(f"WARNING: Rare train checker is not enabled! <@{USER_ID}>")
@@ -607,6 +629,311 @@ async def addGameAchievement(username, channel, mention, game:str='guesser'):
         embed = discord.Embed(title='Achievement unlocked!', color=achievement_colour)
         embed.add_field(name=info['name'], value=f"{info['description']}\n\n View all your achievements: </achievements view:1327085604789551134>")
         await channel.send(mention,embed=embed)
+
+# in the city role assigner
+def init_city_role_db():
+    Path(CITY_ROLE_DB_PATH).parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(CITY_ROLE_DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS city_role_claims (
+            user_id INTEGER PRIMARY KEY,
+            expires_at INTEGER NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+
+def upsert_city_role_claim(user_id: int, expires_at: int):
+    conn = sqlite3.connect(CITY_ROLE_DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute(
+        '''
+        INSERT INTO city_role_claims (user_id, expires_at)
+        VALUES (?, ?)
+        ON CONFLICT(user_id) DO UPDATE SET
+            expires_at = excluded.expires_at
+        ''',
+        (user_id, expires_at)
+    )
+    conn.commit()
+    conn.close()
+
+
+def get_active_city_role_claims():
+    now = int(time.time())
+    conn = sqlite3.connect(CITY_ROLE_DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute(
+        'SELECT user_id, expires_at FROM city_role_claims WHERE expires_at > ? ORDER BY expires_at ASC',
+        (now,)
+    )
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
+
+def get_expired_city_role_claims():
+    now = int(time.time())
+    conn = sqlite3.connect(CITY_ROLE_DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute(
+        'SELECT user_id FROM city_role_claims WHERE expires_at <= ?',
+        (now,)
+    )
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
+
+def delete_city_role_claim(user_id: int):
+    conn = sqlite3.connect(CITY_ROLE_DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM city_role_claims WHERE user_id = ?', (user_id,))
+    conn.commit()
+    conn.close()
+
+
+def build_city_role_panel_embed(active_claims):
+    embed = discord.Embed(
+        title='Who is trainspotting?',
+        description='Use the button below to let others know if you are trainspotting and want to meet up with others.',
+        color=discord.Color.blue(),
+        timestamp=datetime.now()
+    )
+
+    if not active_claims:
+        mentions_text = 'No one is trainspotting right now.'
+    else:
+        lines = [f'<@{user_id}>' for user_id, _ in active_claims]
+        joined = '\n'.join(lines)
+        if len(joined) > 1024:
+            kept = []
+            current = 0
+            remaining = len(lines)
+            for line in lines:
+                add_len = len(line) + (1 if kept else 0)
+                if current + add_len > 980:
+                    break
+                kept.append(line)
+                current += add_len
+                remaining -= 1
+            if remaining > 0:
+                kept.append(f'+ {remaining} more')
+            mentions_text = '\n'.join(kept)
+        else:
+            mentions_text = joined
+
+    embed.add_field(name='People trainspotting:', value=mentions_text, inline=False)
+    return embed
+
+
+async def get_city_role_panel_message(channel: discord.abc.Messageable):
+    async for msg in channel.history(limit=200):
+        if bot.user is None or msg.author.id != bot.user.id:
+            continue
+
+        has_title = any((embed.title or '').strip() == 'Who is trainspotting?' for embed in msg.embeds)
+        if not has_title:
+            continue
+
+        has_button = any(
+            getattr(component, 'custom_id', None) == CITY_ROLE_PANEL_CUSTOM_ID
+            for row in msg.components
+            for component in row.children
+        )
+        if has_button:
+            return msg
+    return None
+
+
+async def refresh_city_role_panel_message(channel: discord.abc.Messageable):
+    message = await get_city_role_panel_message(channel)
+    if message is None:
+        return
+
+    active_claims = get_active_city_role_claims()
+    guild = getattr(channel, 'guild', None)
+    role = guild.get_role(CITY_ROLE_ID) if guild is not None else None
+    cleaned_claims = []
+    for user_id, expires_at in active_claims:
+        if guild is None or role is None:
+            delete_city_role_claim(user_id)
+            continue
+
+        member = guild.get_member(user_id)
+        if member is None:
+            try:
+                member = await guild.fetch_member(user_id)
+            except Exception:
+                member = None
+
+        if member is None or role not in member.roles:
+            delete_city_role_claim(user_id)
+            continue
+
+        cleaned_claims.append((user_id, expires_at))
+
+    active_claims = cleaned_claims
+    embed = build_city_role_panel_embed(active_claims)
+    await message.edit(embed=embed, view=CityRolePanelView())
+
+
+class CityRolePanelView(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label='I am trainspotting', style=discord.ButtonStyle.success, custom_id=CITY_ROLE_PANEL_CUSTOM_ID)
+    async def claim_role(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if CITY_ROLE_ID == 0:
+            await interaction.response.send_message('Role panel role is not configured.', ephemeral=True)
+            return
+
+        role = interaction.guild.get_role(CITY_ROLE_ID)
+
+        member = interaction.user
+        if not isinstance(member, discord.Member):
+            member = interaction.guild.get_member(interaction.user.id)
+            if member is None:
+                member = await interaction.guild.fetch_member(interaction.user.id)
+
+        expires_at = int(time.time()) + CITY_ROLE_DURATION_SECONDS
+
+        if role in member.roles:
+            upsert_city_role_claim(member.id, expires_at)
+            await interaction.response.send_message(
+                f'You already marked yourself as trainspotting. Timer reset, it now expires <t:{expires_at}:R>.',
+                ephemeral=True
+            )
+            if interaction.channel is not None:
+                await refresh_city_role_panel_message(interaction.channel)
+            return
+
+        try:
+            await member.add_roles(role, reason='Clicked city role panel button')
+            upsert_city_role_claim(member.id, expires_at)
+            await interaction.response.send_message(
+                f'You have been marked as trainspotting. Your status will automatically get removed <t:{expires_at}:R>.',
+                ephemeral=True
+            )
+            if interaction.channel is not None:
+                await refresh_city_role_panel_message(interaction.channel)
+        except Exception as e:
+            await interaction.response.send_message(f'Failed to add role: {e}', ephemeral=True)
+
+    @discord.ui.button(label='I am not trainspotting', style=discord.ButtonStyle.danger, custom_id=CITY_ROLE_PANEL_REMOVE_CUSTOM_ID)
+    async def remove_role(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if CITY_ROLE_ID == 0:
+            await interaction.response.send_message('Role panel role is not configured.', ephemeral=True)
+            return
+
+        role = interaction.guild.get_role(CITY_ROLE_ID)
+        member = interaction.user
+        if not isinstance(member, discord.Member):
+            member = interaction.guild.get_member(interaction.user.id)
+            if member is None:
+                member = await interaction.guild.fetch_member(interaction.user.id)
+
+        if role not in member.roles:
+            delete_city_role_claim(member.id)
+            await interaction.response.send_message('You already aren\'t trainspotting!', ephemeral=True)
+            if interaction.channel is not None:
+                await refresh_city_role_panel_message(interaction.channel)
+            return
+
+        try:
+            await member.remove_roles(role, reason='Clicked city role panel remove button')
+            delete_city_role_claim(member.id)
+            await interaction.response.send_message(
+                'Role removed. You are no longer marked as trainspotting.',
+                ephemeral=True
+            )
+            if interaction.channel is not None:
+                await refresh_city_role_panel_message(interaction.channel)
+        except Exception as e:
+            await interaction.response.send_message(f'Failed to remove role: {e}', ephemeral=True)
+
+
+async def city_role_panel_exists(channel: discord.abc.Messageable) -> bool:
+    async for msg in channel.history(limit=200):
+        if bot.user is None or msg.author.id != bot.user.id:
+            continue
+
+        has_title = any((embed.title or '').strip() == 'Who is trainspotting?' for embed in msg.embeds)
+        if not has_title:
+            continue
+
+        has_button = any(
+            getattr(component, 'custom_id', None) == CITY_ROLE_PANEL_CUSTOM_ID
+            for row in msg.components
+            for component in row.children
+        )
+        if has_button:
+            return True
+
+    return False
+
+
+async def ensure_city_role_panel_message():
+    if not CITY_ROLE_PANEL_ENABLED:
+        return
+
+    channel = bot.get_channel(CITY_ROLE_CHANNEL_ID)
+    if channel is None:
+        await printlog(f'City role panel channel not found: {CITY_ROLE_CHANNEL_ID}')
+        return
+
+    existing_message = await get_city_role_panel_message(channel)
+    if existing_message is not None:
+        await refresh_city_role_panel_message(channel)
+        return
+
+    embed = build_city_role_panel_embed(get_active_city_role_claims())
+    await channel.send(embed=embed, view=CityRolePanelView())
+
+
+@tasks.loop(minutes=1)
+async def city_role_expiry_loop():
+    if not CITY_ROLE_PANEL_ENABLED:
+        return
+
+    if CITY_ROLE_ID == 0:
+        return
+
+    channel = bot.get_channel(CITY_ROLE_CHANNEL_ID)
+    if channel is None:
+        return
+
+    guild = getattr(channel, 'guild', None)
+    if guild is None:
+        return
+
+    role = guild.get_role(CITY_ROLE_ID)
+    expired = get_expired_city_role_claims()
+    if not expired:
+        return
+
+    changed = False
+    for user_id, in expired:
+        member = guild.get_member(user_id)
+        if member is None:
+            try:
+                member = await guild.fetch_member(user_id)
+            except Exception:
+                member = None
+
+        if member is not None and role is not None and role in member.roles:
+            try:
+                await member.remove_roles(role, reason='trainspotting role expired after 6 hours')
+            except Exception as e:
+                await printlog(f'Could not remove expired trainspotting role from {user_id}: {e}')
+
+        delete_city_role_claim(user_id)
+        changed = True
+
+    if changed:
+        await refresh_city_role_panel_message(channel)
 
 
 # Rare train finder
@@ -1194,7 +1521,6 @@ async def victorianrailphotos(ctx, number: str = '', traintype: str = '', locati
         app_commands.Choice(name="New South Wales", value="NSW"),
 ])
 async def train_search(ctx, train: str, state:str='auto', hide_run_info:bool=False):
-    if train == 'IEV120': train = 'EV120'
     # try and auto find state
     if state == 'auto':
         Type = trainType(train) 
@@ -3033,6 +3359,7 @@ async def logtrain(ctx, line:str, number:str, start:str, end:str, date:str='toda
         if notes:
             embed.add_field(name="Notes", value=notes.strip('"'))
 
+
         # thing to find image:
         await printlog(f"Finding image for {number}")
         
@@ -3071,9 +3398,22 @@ async def logtrain(ctx, line:str, number:str, start:str, end:str, date:str='toda
             
         except Exception as e:
             await printlog(f"Error getting image: {e}")
+            
+        # extra details thing
+        extraText = '\u200b'
+
+        # tell you if you have ridden the train before
+        _, count = checkTrainRidden(set, f"utils/trainlogger/userdata/{ctx.user.name}.csv")
+        rides_before = max(len(count) - 1, 0)
+        if rides_before > 0:
+            extraText += f"You have ridden this train {rides_before} times before!"
+        else:
+            extraText += "This is your first time riding this train!"
+
+        extraText += f'\nPhoto by {credits} on [victorianrailphotos.com](https://victorianrailphotos.com)' if credits is not None else ''
+        embed.add_field(name="\u200b", value=extraText)
 
         footer = f"Log ID #{id}"
-        footer += f' | Photo by {credits}' if credits is not None else ''
         embed.set_footer(text=footer)
         
         await ctx.edit_original_response(embed=embed)
@@ -3833,6 +4173,7 @@ async def NSWstop_autocompletion(
 ])
 @app_commands.choices(type=[
         app_commands.Choice(name="Urbos 3", value="Urbos 3"),
+    app_commands.Choice(name="Urbos 100", value="Urbos 100"),
         app_commands.Choice(name="Citadis 305", value="Citadis 305"),
 ])
 # SYdney tram logger nsw tram
@@ -3891,6 +4232,7 @@ async def logNSWTram(ctx, line:str, number: str, type:str, start:str, end:str, d
 ])
 @app_commands.choices(type=[
         app_commands.Choice(name="Urbos 3", value="Urbos 3"),
+    app_commands.Choice(name="Urbos 100", value="Urbos 100"),
 ])
 @app_commands.choices(start=[
         app_commands.Choice(name='Alinga Street', value='Alinga Street'),
@@ -3955,7 +4297,7 @@ async def logCanberraTram(ctx, line:str, number: str, type:str, start:str, end:s
             return
 
         # Add train to the list
-        id = addSydneyTram(ctx.user.name, number, type, savedate, line, start.title(), end.title())
+        id = addCanberraTram(ctx.user.name, number, type, savedate, line, start.title(), end.title())
 
         embed = discord.Embed(title="Tram Logged",colour=sydney_tram_colour)
         
@@ -6137,18 +6479,21 @@ async def profile(ctx, user: discord.User = None):
         app_commands.Choice(name="NSW Regional and Interstate Trains", value="log___sydney-train___map.png"),
         app_commands.Choice(name="NSW Light Rail", value="log_sydney-tram_map.png"),
 ])
-async def viewMaps(ctx, mode: str):
+async def viewMaps(ctx, mode: str, no_compression: bool = False):
     await ctx.response.defer()
     log_command(ctx.user.id,'map-view')
     try:
-        editmode = mode.removeprefix("time_based_variants/")
+        editmode = mode.removeprefix("time_based_variants/") + str(no_compression)
         try:
             file=discord.File(f'cache/{editmode}.png', filename='map.png')
         except:
             uncompressed = Image.open(f'utils/trainlogger/map/{mode}')
             legended = legend(uncompressed,f'utils/trainlogger/map/legends/{mode}')
-            compressed = compress(legended)
-            compressed.save(f'cache/{editmode}.png')
+            if no_compression:
+                legended.save(f'cache/{editmode}.png')
+            else:
+                compressed = compress(legended)
+                compressed.save(f'cache/{editmode}.png')
             file=discord.File(f'cache/{editmode}.png', filename='map.png')
         if mode == "time_based_variants/log_train_map_pre_munnel.png":
             embed = discord.Embed(title=f"Former map of the network covered by </log train:1289843416628330506>", color=0xb8b8b8, description="This is a map that is used by a seperate command to show where you have been on the railway network. This is the map that was used before the Metro Tunnel Big Switch on February 1st 2026.")
@@ -6188,7 +6533,10 @@ async def viewMaps(ctx, mode: str):
             await printlog(f"Retrieved NSW Light Rail for {ctx.user.name} in {ctx.channel.mention}")
         embed.set_image(url="attachment://map.png")
         embed.set_footer(text="If you're interested in helping make these maps (especially the interstate ones) contact Xm9G or Comeng17")
-        await ctx.followup.send(embed=embed, file=file)
+        if no_compression:
+            await ctx.followup.send(file=file)
+        else:
+            await ctx.followup.send(embed=embed, file=file)
     except Exception as e:
         await printlog(e)
 
@@ -6213,7 +6561,7 @@ async def viewMaps(ctx, mode: str):
         app_commands.Choice(name="Sprinter", value="Sprinter"),
         app_commands.Choice(name="Other", value="Other"),
 ])
-async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel.png",line: str='All', train:str='all', year: int=0, user: discord.Member=None,global_stats:bool=False):
+async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel.png",line: str='All', train:str='all', year: int=0, user: discord.Member=None,global_stats:bool=False,no_compression:bool=False):
     await ctx.response.defer()
     log_command(ctx.user.id, 'maps-trips')
     await printlog(f"Making trip map for {str(ctx.user.id)}")
@@ -6229,7 +6577,7 @@ async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel
         if mode == "time_based_variants/log_train_map_pre_munnel.png":
             modeName = 'vic'
             try:
-                percent_amount = await asyncio.to_thread(logMap, target_user, lines_dictionary_log_train_map_pre_munnel, mode, line, year, 'vic', train, global_stats)
+                percent_amount = await asyncio.to_thread(logMap, target_user, lines_dictionary_log_train_map_pre_munnel, mode, line, year, 'vic', train, global_stats, no_compression)
             except FileNotFoundError:
                 await ctx.followup.send(f'{"You have" if user == None else username + " has"} no logs!')
                 return
@@ -6260,13 +6608,13 @@ async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel
                 nameextras += f' | {round(percentageCovered, 2)} percent of segments travelled'
                 
                 if global_stats == True:
-                    file = discord.File(f'cache/{modeName}-{year}-{train}-{line}.png', filename='map.png')
+                    file = discord.File(f'cache/{modeName}-{year}-{train}-{line}-{str(no_compression)}.png', filename='map.png')
                 else:
-                    file = discord.File(f'cache/{username}-{modeName}-{year}-{train}-{line}.png', filename='map.png')
+                    file = discord.File(f'cache/{username}-{modeName}-{year}-{train}-{line}-{str(no_compression)}.png', filename='map.png')
                 line_str = '' if line == 'All' else f' on the {line} Line'
                 year_str = '' if year == 0 else f' in {str(year)}'
                 cleanednamextras = nameextras.replace(' ', '%20').replace('|', '%7C')
-                imageURL = f"https://trackpulsevic.xm9g.net/logs/map?img={username}-{modeName}-{year}-{train.replace(' ', '%20')}-{line.replace(' ', '%20')}&name={username}%27s%20Victorian%20train%20map{cleanednamextras}"
+                imageURL = f"https://trackpulsevic.xm9g.net/logs/map?img={username}-{modeName}-{year}-{train.replace(' ', '%20')}-{line.replace(' ', '%20')}-{str(no_compression)}&name={username}%27s%20Victorian%20train%20map{cleanednamextras}"
                 embed = discord.Embed(title=f"Pre Big Switch Map of logs with </log train:1289843416628330506> for {nameextras}", 
                                     color=0xb8b8b8, 
                                     description=f"[Click here to view in your browser]({imageURL})")
@@ -6275,14 +6623,17 @@ async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel
                 pfp = user_pic.avatar.url
                 embed.set_author(name="Map by Comeng17", icon_url=pfp)
                 embed.set_footer(text="If you're interested in helping make these maps (especially the interstate ones) contact Xm9G or Comeng17")
-                await ctx.followup.send(embed=embed, file=file)
+                if no_compression:
+                    await ctx.followup.send(file=file)
+                else:
+                    await ctx.followup.send(embed=embed, file=file)
             except Exception as e:
                 await ctx.followup.send(f'Error sending map:\n```{e}```')
         
         if mode == "time_based_variants/log_train_map_post_munnel.png":
             modeName = 'vic-metrotunnel'
             try:
-                percent_amount = await asyncio.to_thread(logMap, target_user, lines_dictionary_log_train_map_post_munnel, mode, line, year, 'vic-metrotunnel', train, global_stats)
+                percent_amount = await asyncio.to_thread(logMap, target_user, lines_dictionary_log_train_map_post_munnel, mode, line, year, 'vic-metrotunnel', train, global_stats, no_compression)
             except FileNotFoundError:
                 await ctx.followup.send(f'{"You have" if user == None else username + " has"} no logs!')
                 return
@@ -6313,12 +6664,12 @@ async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel
                 nameextras += f' | {round(percentageCovered, 2)} percent of segments travelled'
 
                 if global_stats == True:
-                    file = discord.File(f'cache/{modeName}-{year}-{train}-{line}.png', filename='map.png')
+                    file = discord.File(f'cache/{modeName}-{year}-{train}-{line}-{str(no_compression)}.png', filename='map.png')
                 else:
-                    file = discord.File(f'cache/{username}-{modeName}-{year}-{train}-{line}.png', filename='map.png')
+                    file = discord.File(f'cache/{username}-{modeName}-{year}-{train}-{line}-{str(no_compression)}.png', filename='map.png')
                 line_str = '' if line == 'All' else f' on the {line} Line'
                 year_str = '' if year == 0 else f' in {str(year)}'
-                imageURL = f'https://trackpulsevic.xm9g.net/logs/map?img={username}-{modeName}&name={username}\'s%20Victorian%20train%20map%20post%20Metro%20Tunnel'
+                imageURL = f'https://trackpulsevic.xm9g.net/logs/map?img={username}-{modeName}&name={username}-{str(no_compression)}\'s%20Victorian%20train%20map%20post%20Metro%20Tunnel'
                 embed = discord.Embed(title=f"Map of logs with </log train:1289843416628330506> for {nameextras}", 
                                     color=0xb8b8b8, 
                                     description=f"[Click here to view in your browser]({imageURL})")
@@ -6327,7 +6678,10 @@ async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel
                 pfp = user_pic.avatar.url
                 embed.set_author(name="Map by Comeng17", icon_url=pfp)
                 embed.set_footer(text="If you're interested in helping make these maps (especially the interstate ones) contact Xm9G or Comeng17")
-                await ctx.followup.send(embed=embed, file=file)
+                if no_compression:
+                    await ctx.followup.send(file=file)
+                else:
+                    await ctx.followup.send(embed=embed, file=file)
             except Exception as e:
                 await ctx.followup.send(f'Error sending map:\n```{e}```')
         
@@ -6358,7 +6712,10 @@ async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel
                 pfp = user_pic.avatar.url
                 embed.set_author(name="Map by aperturethefloof", icon_url=pfp)
                 embed.set_footer(text="If you're interested in helping make these maps (especially the interstate ones) contact Xm9G or Comeng17")
-                await ctx.followup.send(embed=embed, file=file)
+                if no_compression:
+                    await ctx.followup.send(file=file)
+                else:
+                    await ctx.followup.send(embed=embed, file=file)
             except Exception as e:
                 await ctx.followup.send(f'Error sending map:\n```{e}```')
 
@@ -6763,6 +7120,99 @@ async def exporthistory(ctx, train:str):
     else:
         await ctx.send("Currently only admins can export train history, in the future this data may become available to all users.")
 
+@bot.command(name='backup')
+async def backup(ctx):
+    if ctx.guild is not None:
+        await ctx.send("This command can only be used in DMs.")
+        return
+
+    if ctx.author.id not in admin_users:
+        await ctx.send("You are not authorized to use this command.")
+        return
+
+    log_command(ctx.author.id, 'backup')
+    await ctx.send("Preparing backup archive...")
+
+    root_path = Path(__file__).resolve().parent
+    userdata_path = root_path / 'utils' / 'trainlogger' / 'userdata'
+    leaderboard_path = root_path / 'utils' / 'game' / 'scores'
+    temp_path = root_path / 'temp'
+    temp_path.mkdir(parents=True, exist_ok=True)
+
+    backup_name = f"trackpulse-backup-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}"
+    max_discord_file_size = 8 * 1024 * 1024
+    target_archive_size = int(7.5 * 1024 * 1024)
+
+    files_to_backup = []
+    for source_path in [userdata_path, leaderboard_path]:
+        if source_path.exists():
+            for file_path in source_path.rglob('*'):
+                if file_path.is_file():
+                    if source_path == userdata_path and 'maps' in file_path.relative_to(userdata_path).parts:
+                        continue
+                    files_to_backup.append(file_path)
+
+    if not files_to_backup:
+        await ctx.send("No backup data was found.")
+        return
+
+    files_to_backup.sort(key=lambda p: str(p))
+
+    archive_groups = []
+    current_group = []
+    current_estimated_size = 0
+
+    for file_path in files_to_backup:
+        file_size = file_path.stat().st_size
+        # Include a small buffer per file for zip metadata overhead.
+        estimated_entry_size = file_size + 2048
+
+        if current_group and (current_estimated_size + estimated_entry_size) > target_archive_size:
+            archive_groups.append(current_group)
+            current_group = []
+            current_estimated_size = 0
+
+        current_group.append(file_path)
+        current_estimated_size += estimated_entry_size
+
+    if current_group:
+        archive_groups.append(current_group)
+
+    created_archives = []
+
+    try:
+        total_parts = len(archive_groups)
+        for index, group in enumerate(archive_groups, start=1):
+            archive_filename = f"{backup_name}-part{index:02d}-of-{total_parts:02d}.zip"
+            archive_path = temp_path / archive_filename
+
+            with zipfile.ZipFile(archive_path, 'w', zipfile.ZIP_DEFLATED) as archive:
+                for file_path in group:
+                    archive.write(file_path, file_path.relative_to(root_path))
+
+            created_archives.append(archive_path)
+            archive_size = archive_path.stat().st_size
+            if archive_size > max_discord_file_size:
+                await ctx.send(
+                    f"Backup failed: {archive_filename} is {archive_size / (1024 * 1024):.2f} MB, "
+                    "which is above Discord's 8 MB upload limit."
+                )
+                return
+
+        await ctx.send(f"Backup ready. Sending {len(created_archives)} archive file(s).")
+        for archive_path in created_archives:
+            await ctx.send(file=discord.File(str(archive_path), filename=archive_path.name))
+    except Exception as e:
+        await printlog(f"Backup creation failed: {e}")
+        await ctx.send(f"Failed to generate backup: {e}")
+    finally:
+        for archive_path in created_archives:
+            if archive_path.exists():
+                try:
+                    archive_path.unlink()
+                except Exception:
+                    pass
+
 # analytics viewer
 @bot.command()
 async def analytics(ctx,mode: str=None, user: discord.Member=None):
@@ -7060,6 +7510,20 @@ async def restart(ctx):
     # It tells the OS to replace the current process with a new one
     # This ensures the old bot instance dies immediately.
     os.execv(sys.executable, ['python'] + sys.argv)
+
+@bot.command()
+async def shutdown(ctx):
+    if ctx.author.id in admin_users:
+        log_command(ctx.author.id, 'shutdown')
+        await ctx.send(f"Shutting down bot")
+        await printlog("Shutting down bot")
+        
+        await bot.close()
+        await stop_webserver()
+
+    else:
+        await printlog(f'{str(ctx.author.id)} tried to shutdown the bot.')
+        await ctx.send("You are not authorized to use this command.")
 
 @bot.command()
 async def update(ctx):

@@ -1148,3 +1148,17 @@ def streak(user, mode):
     except Exception as e:
         print(f"Error getting streak for {user}: {e}")
         return 0, 0
+    
+# thing if the user has been on the train
+def checkTrainRidden(trainSet, file_path):
+    if not os.path.exists(file_path):
+        print(f"The file {file_path} does not exist.")
+        return False, []
+
+    log_ids = []
+    with open(file_path, mode='r') as file:
+        csv_reader = csv.reader(file)
+        for row in csv_reader:
+            if row[1] == trainSet:
+                log_ids.append(row[0])
+    return bool(log_ids), log_ids

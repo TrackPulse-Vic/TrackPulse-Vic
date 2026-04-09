@@ -151,6 +151,7 @@ label_colors = {
     "Metropolis Stock": '#04959e',
     
     "Urbos 3": '#ed2438',
+    "Urbos 100": '#ed2438',
     "Citadis 305": '#ed2438',
     
     # perth lines

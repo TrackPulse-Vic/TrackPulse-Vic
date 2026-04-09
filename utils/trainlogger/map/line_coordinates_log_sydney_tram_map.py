@@ -43,10 +43,10 @@ line_coordinates = {
         ('Lilyfield', 'Rozelle Bay'): [
             (3550 + x_offset, 3750 + y_offset, 4050 + x_offset, 3900 + y_offset),
         ],
-        ('Leichardt North', 'Lilyfield'): [
+        ('Leichhardt North', 'Lilyfield'): [
             (3050 + x_offset, 3750 + y_offset, 3600 + x_offset, 3900 + y_offset),
         ],
-        ('Hawthorne', 'Leichardt North'): [
+        ('Hawthorne', 'Leichhardt North'): [
             (2800 + x_offset, 3800 + y_offset, 2950 + x_offset, 4000 + y_offset),
             (2800 + x_offset, 3750 + y_offset, 3100 + x_offset, 3900 + y_offset),
         ],

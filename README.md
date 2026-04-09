@@ -8,7 +8,7 @@
     to get PTV api info email [APIKeyRequest@ptv.vic.gov.au](mailto:APIKeyRequest@ptv.vic.gov.au)
     make discord bot at [the discord developer portal](https://discord.com/developers/applications)
 - install requiements with `pip install -r requirements.txt`
-- run `bot.py`
+- run `runthis.py` (`bot.py` also works but doesn't have the ability to remotely turn the bot back on)
 - done!
 
 ## Important
