@@ -11,6 +11,7 @@ from utils.search import trainData
 from utils.stats.stats import log_command
 from utils.stoppingpattern import getStoppingPatternFromCar
 from utils.trainImage import getIcon, getImage
+from utils.trainlogger.stats import checkTrainRidden
 from utils.trainset import setNumber
 from utils.unixtime import convert_iso_to_unix_time, convert_times
 
@@ -201,21 +202,6 @@ async def searchTrainCommand(ctx, train: str, hide_run_info:bool=False, metro_co
                 if information[1]:
                     liverydisplay = discord.ui.TextDisplay(f'**Livery:** {information[1]}')
                     
-                    
-                # thing if the user has been on
-                def checkTrainRidden(variable, file_path):
-                    if not os.path.exists(file_path):
-                        print(f"The file {file_path} does not exist.")
-                        return False, []
-
-                    log_ids = []
-                    with open(file_path, mode='r') as file:
-                        csv_reader = csv.reader(file)
-                        for row in csv_reader:
-                            if row[1] == variable:
-                                log_ids.append(row[0])
-                    
-                    return bool(log_ids), log_ids
             
                 fPath = f'utils/trainlogger/userdata/{ctx.user.name}.csv'
                 result, log_ids = checkTrainRidden(set, fPath)

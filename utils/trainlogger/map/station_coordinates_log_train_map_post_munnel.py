@@ -207,7 +207,7 @@ station_coordinates = {
     "Middle Footscray": (-1394 + x_offset, -522 + y_offset, -878 + x_offset, -232 + y_offset),
     "West Footscray": (-1994 + x_offset, -535 + y_offset, -1498 + x_offset, -246 + y_offset),
     "Tottenham": (-2550 + x_offset, -363 + y_offset, -2019 + x_offset, -219 + y_offset),
-    "Sunshine": (-3050 + x_offset, -350 + y_offset, -2600 + x_offset, -250 + y_offset),
+    "Sunshine": (-3050 + x_offset, 660 + y_offset, -2600 + x_offset, 800 + y_offset),
     "Albion": (-2980 + x_offset, -538 + y_offset, -2664 + x_offset, -435 + y_offset),
     "Ginifer": (-2974 + x_offset, -824 + y_offset, -2657 + x_offset, -735 + y_offset),
     "St Albans": (-2974 + x_offset, -1031 + y_offset, -2512 + x_offset, -907 + y_offset),

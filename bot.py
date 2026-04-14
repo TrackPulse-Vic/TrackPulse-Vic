@@ -40,6 +40,7 @@ import typing
 from re import A
 import traceback
 import os
+import zipfile
 from pathlib import Path
 import git
 import pandas as pd
@@ -1520,7 +1521,6 @@ async def victorianrailphotos(ctx, number: str = '', traintype: str = '', locati
         app_commands.Choice(name="New South Wales", value="NSW"),
 ])
 async def train_search(ctx, train: str, state:str='auto', hide_run_info:bool=False):
-    if train == 'IEV120': train = 'EV120'
     # try and auto find state
     if state == 'auto':
         Type = trainType(train) 
@@ -3359,6 +3359,7 @@ async def logtrain(ctx, line:str, number:str, start:str, end:str, date:str='toda
         if notes:
             embed.add_field(name="Notes", value=notes.strip('"'))
 
+
         # thing to find image:
         await printlog(f"Finding image for {number}")
         
@@ -3397,9 +3398,22 @@ async def logtrain(ctx, line:str, number:str, start:str, end:str, date:str='toda
             
         except Exception as e:
             await printlog(f"Error getting image: {e}")
+            
+        # extra details thing
+        extraText = '\u200b'
+
+        # tell you if you have ridden the train before
+        _, count = checkTrainRidden(set, f"utils/trainlogger/userdata/{ctx.user.name}.csv")
+        rides_before = max(len(count) - 1, 0)
+        if rides_before > 0:
+            extraText += f"You have ridden this train {rides_before} times before!"
+        else:
+            extraText += "This is your first time riding this train!"
+
+        extraText += f'\nPhoto by {credits} on [victorianrailphotos.com](https://victorianrailphotos.com)' if credits is not None else ''
+        embed.add_field(name="\u200b", value=extraText)
 
         footer = f"Log ID #{id}"
-        footer += f' | Photo by {credits}' if credits is not None else ''
         embed.set_footer(text=footer)
         
         await ctx.edit_original_response(embed=embed)
@@ -7105,6 +7119,99 @@ async def exporthistory(ctx, train:str):
         await ctx.send(file=discord.File(filepath, filename=f"{train}.csv"))
     else:
         await ctx.send("Currently only admins can export train history, in the future this data may become available to all users.")
+
+@bot.command(name='backup')
+async def backup(ctx):
+    if ctx.guild is not None:
+        await ctx.send("This command can only be used in DMs.")
+        return
+
+    if ctx.author.id not in admin_users:
+        await ctx.send("You are not authorized to use this command.")
+        return
+
+    log_command(ctx.author.id, 'backup')
+    await ctx.send("Preparing backup archive...")
+
+    root_path = Path(__file__).resolve().parent
+    userdata_path = root_path / 'utils' / 'trainlogger' / 'userdata'
+    leaderboard_path = root_path / 'utils' / 'game' / 'scores'
+    temp_path = root_path / 'temp'
+    temp_path.mkdir(parents=True, exist_ok=True)
+
+    backup_name = f"trackpulse-backup-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}"
+    max_discord_file_size = 8 * 1024 * 1024
+    target_archive_size = int(7.5 * 1024 * 1024)
+
+    files_to_backup = []
+    for source_path in [userdata_path, leaderboard_path]:
+        if source_path.exists():
+            for file_path in source_path.rglob('*'):
+                if file_path.is_file():
+                    if source_path == userdata_path and 'maps' in file_path.relative_to(userdata_path).parts:
+                        continue
+                    files_to_backup.append(file_path)
+
+    if not files_to_backup:
+        await ctx.send("No backup data was found.")
+        return
+
+    files_to_backup.sort(key=lambda p: str(p))
+
+    archive_groups = []
+    current_group = []
+    current_estimated_size = 0
+
+    for file_path in files_to_backup:
+        file_size = file_path.stat().st_size
+        # Include a small buffer per file for zip metadata overhead.
+        estimated_entry_size = file_size + 2048
+
+        if current_group and (current_estimated_size + estimated_entry_size) > target_archive_size:
+            archive_groups.append(current_group)
+            current_group = []
+            current_estimated_size = 0
+
+        current_group.append(file_path)
+        current_estimated_size += estimated_entry_size
+
+    if current_group:
+        archive_groups.append(current_group)
+
+    created_archives = []
+
+    try:
+        total_parts = len(archive_groups)
+        for index, group in enumerate(archive_groups, start=1):
+            archive_filename = f"{backup_name}-part{index:02d}-of-{total_parts:02d}.zip"
+            archive_path = temp_path / archive_filename
+
+            with zipfile.ZipFile(archive_path, 'w', zipfile.ZIP_DEFLATED) as archive:
+                for file_path in group:
+                    archive.write(file_path, file_path.relative_to(root_path))
+
+            created_archives.append(archive_path)
+            archive_size = archive_path.stat().st_size
+            if archive_size > max_discord_file_size:
+                await ctx.send(
+                    f"Backup failed: {archive_filename} is {archive_size / (1024 * 1024):.2f} MB, "
+                    "which is above Discord's 8 MB upload limit."
+                )
+                return
+
+        await ctx.send(f"Backup ready. Sending {len(created_archives)} archive file(s).")
+        for archive_path in created_archives:
+            await ctx.send(file=discord.File(str(archive_path), filename=archive_path.name))
+    except Exception as e:
+        await printlog(f"Backup creation failed: {e}")
+        await ctx.send(f"Failed to generate backup: {e}")
+    finally:
+        for archive_path in created_archives:
+            if archive_path.exists():
+                try:
+                    archive_path.unlink()
+                except Exception:
+                    pass
 
 # analytics viewer
 @bot.command()

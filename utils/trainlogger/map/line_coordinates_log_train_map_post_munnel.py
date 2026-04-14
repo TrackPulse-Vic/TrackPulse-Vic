@@ -1620,11 +1620,20 @@ line_coordinates = {
             (-5100 + x_offset, 550 + y_offset, -4950 + x_offset, 600 + y_offset),
             (-4950 + x_offset, 200 + y_offset, -4800 + x_offset, 650 + y_offset), # deer park coords
         ],
-        ('Deer Park','Footscray'):[
-            (-4800 + x_offset, 550 + y_offset, -2450 + x_offset, 600 + y_offset),
+        ('Deer Park','Sunshine'):[
+            (-4800 + x_offset, 550 + y_offset, -2900 + x_offset, 600 + y_offset),
+            (-2900 + x_offset, -300 + y_offset, -2750 + x_offset, -50 + y_offset), # Sunshine Coords
+            (-2850 + x_offset, -80 + y_offset, -2800 + x_offset, 220 + y_offset), # Sunshine Coords
+            (-2900 + x_offset, 220 + y_offset, -2750 + x_offset, 650 + y_offset), # Sunshine Coords 
+        ],
+        ('Sunshine','Footscray'):[
+            (-2750 + x_offset, 550 + y_offset, -2450 + x_offset, 600 + y_offset),
             (-2500 + x_offset, 50 + y_offset, -2450 + x_offset, 600 + y_offset),
             (-2500 + x_offset, 50 + y_offset, -600 + x_offset, 100 + y_offset),
-            (-600 + x_offset, -200 + y_offset, -451 + x_offset, 149 + y_offset), # footscray station icon
+            (-2900 + x_offset, -300 + y_offset, -2750 + x_offset, -50 + y_offset), # Sunshine Coords
+            (-2850 + x_offset, -80 + y_offset, -2800 + x_offset, 220 + y_offset), # Sunshine Coords
+            (-2900 + x_offset, 220 + y_offset, -2750 + x_offset, 650 + y_offset), # Sunshine Coords 
+            (-600 + x_offset, -300 + y_offset, -451 + x_offset, 149 + y_offset), # footscray station icon
             (-550 + x_offset, 100 + y_offset, -501 + x_offset, 249 + y_offset), # footscray station icon
             (-600 + x_offset, 200 + y_offset, -451 + x_offset, 349 + y_offset), # footscray station icon
         ],
