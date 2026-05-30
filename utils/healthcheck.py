@@ -6,20 +6,28 @@ def pinghealthcheck(service:str='bot', fail:bool=False):
     # Load environment variables from .env file
     load_dotenv()
     if service == 'backend':
-        uuid = os.getenv('BACKEND_HEALTHCHECK_UUID')
+        url = os.getenv('BACKEND_PUSH_HEALTHCHECK_URL') or os.getenv('PUSH_HEALTHCHECK_URL')
+        fail_url = os.getenv('BACKEND_PUSH_HEALTHCHECK_FAIL_URL') or os.getenv('PUSH_HEALTHCHECK_FAIL_URL')
     else:
-        uuid = os.getenv('HEALTHCHECK_UUID')
-    print(f"Health check UUID: {uuid}")
+        url = os.getenv('PUSH_HEALTHCHECK_URL')
+        fail_url = os.getenv('PUSH_HEALTHCHECK_FAIL_URL')
 
-    url = f'https://hc-ping.com/{uuid}'
+    if not url:
+        print('Health check URL is not set in env (PUSH_HEALTHCHECK_URL).')
+        return
+
     if fail:
-        url += '/fail'
+        # Prefer explicit fail URL. If not provided, try deriving one from the success URL.
+        if fail_url:
+            url = fail_url
+        else:
+            url = url.replace('status=up', 'status=down').replace('msg=OK', 'msg=FAIL')
     
     try:
         response = requests.get(url)
         if response.status_code == 200:
             print("Health check successful.")
         else:
-            print(f"Health check failed with status code: {response.status_code}, check the UUID is set correctly in the env")
+            print(f"Health check failed with status code: {response.status_code}, check the URL in env")
     except requests.RequestException as e:
         print(f"An error occurred during the health check: {e}")

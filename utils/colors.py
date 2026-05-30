@@ -409,7 +409,7 @@ def getTrainTypeEmoji(trainType):
     elif trainType == 'N Class':
         return('<:NClass:1214140049243770911>')
     else:
-        return(trainType)
+        return('')
 
 def getModeEmoji(mode:int):
     if mode == 0:

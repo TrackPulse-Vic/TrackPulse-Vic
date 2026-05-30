@@ -499,7 +499,7 @@ def checkAchievements(user):
                     train_types_by_date[date] = set()
                 train_types_by_date[date].add(train_type)
 
-        standard_train_types = {"X'Trapolis 100", 'Alstom Comeng', 'EDI Comeng', 'Siemens Nexas', 'HCMT', 'VLocity', 'N Class', 'Sprinter'}
+        standard_train_types = {"X'Trapolis 100","X'Trapolis 2.0", 'Alstom Comeng', 'EDI Comeng', 'Siemens Nexas', 'HCMT', 'VLocity', 'N Class', 'Sprinter'}
         
         for date, types in train_types_by_date.items():
             if types.issuperset(standard_train_types):
