@@ -418,7 +418,7 @@ def distanceOverTime(user, year, globalStats=False):
         file_paths = []
         if os.path.exists(base_path):
             for file in os.listdir(base_path):
-                if file.endswith('.csv') and file not in ['XXm9G.csv', 'comeng_17.csv']:
+                if file.endswith('.csv'):
                     file_paths.append(os.path.join(base_path, file))
         
         all_trips = []
