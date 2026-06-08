@@ -6727,11 +6727,11 @@ async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel
                 if global_stats == True:
                     file = discord.File(f'cache/{modeName}-{year}-{train}-{line}-{str(no_compression)}.png', filename='map.png')
                 else:
-                    file = discord.File(f'cache/{username}-{modeName}-{year}-{train}-{line}-{str(no_compression)}.png', filename='map.png')
+                    file = discord.File(f'cache/{target_user}-{modeName}-{year}-{train}-{line}-{str(no_compression)}.png', filename='map.png')
                 line_str = '' if line == 'All' else f' on the {line} Line'
                 year_str = '' if year == 0 else f' in {str(year)}'
                 cleanednamextras = nameextras.replace(' ', '%20').replace('|', '%7C')
-                imageURL = f"https://trackpulsevic.xm9g.net/logs/map?img={username}-{modeName}-{year}-{train.replace(' ', '%20')}-{line.replace(' ', '%20')}-{str(no_compression)}&name={username}%27s%20Victorian%20train%20map{cleanednamextras}"
+                imageURL = f"https://trackpulsevic.xm9g.net/logs/map?img={target_user}-{modeName}-{year}-{train.replace(' ', '%20')}-{line.replace(' ', '%20')}-{str(no_compression)}&name={username}%27s%20Victorian%20train%20map{cleanednamextras}"
                 embed = discord.Embed(title=f"Pre Big Switch Map of logs with </log train:1289843416628330506> for {nameextras}", 
                                     color=0xb8b8b8, 
                                     description=f"[Click here to view in your browser]({imageURL})")
@@ -6783,10 +6783,10 @@ async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel
                 if global_stats == True:
                     file = discord.File(f'cache/{modeName}-{year}-{train}-{line}-{str(no_compression)}.png', filename='map.png')
                 else:
-                    file = discord.File(f'cache/{username}-{modeName}-{year}-{train}-{line}-{str(no_compression)}.png', filename='map.png')
+                    file = discord.File(f'cache/{target_user}-{modeName}-{year}-{train}-{line}-{str(no_compression)}.png', filename='map.png')
                 line_str = '' if line == 'All' else f' on the {line} Line'
                 year_str = '' if year == 0 else f' in {str(year)}'
-                imageURL = f'https://trackpulsevic.xm9g.net/logs/map?img={username}-{modeName}&name={username}-{str(no_compression)}\'s%20Victorian%20train%20map%20post%20Metro%20Tunnel'
+                imageURL = f'https://trackpulsevic.xm9g.net/logs/map?img={target_user}-{modeName}&name={username}-{str(no_compression)}\'s%20Victorian%20train%20map%20post%20Metro%20Tunnel'
                 embed = discord.Embed(title=f"Map of logs with </log train:1289843416628330506> for {nameextras}", 
                                     color=0xb8b8b8, 
                                     description=f"[Click here to view in your browser]({imageURL})")
@@ -6817,10 +6817,10 @@ async def mapstrips(ctx,mode: str="time_based_variants/log_train_map_post_munnel
                 if global_stats == True:
                     file = discord.File(f'cache/{modeName}-{year}-{train}-{line}.png', filename='map.png')
                 else:
-                    file = discord.File(f'cache/{username}-{modeName}-{year}-{train}-{line}.png', filename='map.png')
+                    file = discord.File(f'cache/{target_user}-{modeName}-{year}-{train}-{line}.png', filename='map.png')
                 line_str = '' if line == 'All' else f' on the {line} Line'
                 year_str = '' if year == 0 else f' in {str(year)}'
-                imageURL = f'https://trackpulsevic.xm9g.net/logs/map?img={username}-{modeName}&name={username}\'s%20Sydney%20tram%20map'
+                imageURL = f'https://trackpulsevic.xm9g.net/logs/map?img={target_user}-{modeName}&name={username}\'s%20Sydney%20tram%20map'
                 embed = discord.Embed(title=f"Map of logs with </log sydney-tram:1289843416628330506> for @{username}{year_str}{line_str}", 
                                     color=0xb8b8b8, 
                                     description=f"THIS MAP IS NOT FINISHED [Click here to view in your browser]({imageURL})")

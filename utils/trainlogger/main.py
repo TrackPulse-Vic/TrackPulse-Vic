@@ -969,7 +969,7 @@ def deleteRow(userid, username, logid, mode):
         fileid = f"utils/trainlogger/userdata/{userid}.csv"
     else:
         filename = f"utils/trainlogger/userdata/{mode}/{username}.csv"
-        filename = f"utils/trainlogger/userdata/{mode}/{userid}.csv"
+        fileid = f"utils/trainlogger/userdata/{mode}/{userid}.csv"
     
     if not os.path.exists(fileid):
         print(f"userid doesn't exist, using username: {filename}")
