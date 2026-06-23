@@ -762,8 +762,8 @@ def completionList(user, line, summary:bool = False):
         stations = [
             "Mernda", 
             "Hawkstowe",
-            "South Morang",
             "Middle Gorge", 
+            "South Morang",
             "Epping", 
             "Lalor", 
             "Thomastown", 
@@ -787,7 +787,7 @@ def completionList(user, line, summary:bool = False):
         ]
     elif line == "Frankston":
         stations = [
-            "Frankston", "Kananook", "Seaford", "Carrum", 
+            "Frankston", "Kananook", "Seaford", "Carrum", "Bonbeach",
             "Chelsea", "Edithvale", "Aspendale", "Mordialloc", "Parkdale", 
             "Mentone", "Cheltenham", "Southland", "Highett", "Moorabbin", "Patterson", 
             "Bentleigh", "McKinnon", "Ormond", "Glen Huntly", "Caulfield", "Malvern", 
@@ -813,8 +813,8 @@ def completionList(user, line, summary:bool = False):
         ]
     elif line == "Werribee":
         stations = [
-            "Werribee", "Hoppers Crossing", "Williams Landing", "Point Cook", "Laverton", 
-            "Aircraft", "Altona", "Seaholme", "Westona", "Seaholme", 
+            "Werribee", "Hoppers Crossing", "Williams Landing",
+            "Aircraft", "Laverton", "Westona",  "Altona", "Seaholme",
             "Newport", "Spotswood", "Yarraville", "Seddon", "Footscray", "South Kensington", "North Melbourne"
         ]
     elif line == "Williamstown":
@@ -842,7 +842,6 @@ def completionList(user, line, summary:bool = False):
             "Cranbourne",
             "Merinda Park",
             "Lynbrook",
-            "Hallam",
             "Dandenong",
             "Yarraman",
             "Noble Park",
