@@ -1866,7 +1866,8 @@ async def bussearchcommand(ctx, bus: str, operator:str='Unknown'):
     await ctx.response.defer()
     bus = bus.upper()
     if operator != "Unknown":
-        operatorlist = {"Dysons":'D',"Kinetic":'K',"Transit Systems":'TS',"Ventura":'V',"CDC":'C',"Skybus":'S',"McKenzies":'MK'}
+        await printlog(f'getting operator: {operator}')
+        operatorlist = {"Dysons":'D',"Kinetic":'K',"Transit Systems":'TS',"Ventura":'V',"CDC":'C',"Skybus":'SK',"McKenzies":'MK'}
         if operator == 'Ventura Bus Lines':
             operator = 'Ventura'
         elif operator == 'Cdc Melbourne':
@@ -1880,7 +1881,7 @@ async def bussearchcommand(ctx, bus: str, operator:str='Unknown'):
     embed= await bussearch.search(bus, ctx)
     try:
         if embed == 'n':
-            await ctx.edit_original_response(content="Please use operator prefix before number:\nDysons: `D`\nKinetic: `K`\nTransit Systems: TS\nVentura: `V`\nCDC: `C` (also include depot letter eg: W,T or O)\nSkybus: `S`\nMcKenzies: `MK`")
+            await ctx.edit_original_response(content="Please use operator prefix before number:\nDysons: `D`\nKinetic: `K`\nTransit Systems: TS\nVentura: `V`\nCDC: `C` (also include depot letter eg: W,T or O)\nSkybus: `SK`\nMcKenzies: `MK`\nChristian's: `CH`\nCranbourne: `CR`\nSunbury: `S`\nMartyr's: `MT`")
         else:
             await ctx.edit_original_response(embed=embed)
 
