@@ -1867,13 +1867,21 @@ async def bussearchcommand(ctx, bus: str, operator:str='Unknown'):
     bus = bus.upper()
     if operator != "Unknown":
         await printlog(f'getting operator: {operator}')
-        operatorlist = {"Dysons":'D',"Kinetic":'K',"Transit Systems":'TS',"Ventura":'V',"CDC":'C',"Skybus":'SK',"McKenzies":'MK'}
+        operatorlist = {"Dysons":'D',"Kinetic":'K',"Transit Systems":'TS',"Ventura":'V',"CDC":'C',"Skybus":'SK',"McKenzies":'MK',"Martyrs":'MT',"Sunbury":'S',"Cranbourne":'CR',"Christians":'CH'}
         if operator == 'Ventura Bus Lines':
             operator = 'Ventura'
         elif operator == 'Cdc Melbourne':
             operator = 'CDC'
         elif operator == 'McKenzies Tourist Service':
             operator = 'McKenzies'
+        elif operator == 'Martyrs Bus Service':
+            operator = 'Martyrs'
+        elif operator == 'Sunbury Bus Service':
+            operator == 'Sunbury'
+        elif operator == 'Cranbourne Transit':
+            operator = 'Cranbourne'
+        elif operator == 'Christians Bus Lines':
+            operator = 'Christians'
 
         bus = operatorlist[operator] + bus
     
@@ -4454,6 +4462,27 @@ async def logBus(ctx, line:str, number: str, start:str, end:str, operator:str='U
             if set[0] == "D":
                 numbertest = set[1:]
                 operator = "Dysons"
+            elif set[:2] == "SK":
+                numbertest = set[2:]
+                operator == "Skybus"
+            elif set[:2] == "MK":
+                numbertest = set[2:]
+                operator = "McKenzies"
+            elif set[:2] == "TS":
+                numbertest = set[2:]
+                operator = "Transit Systems"
+            elif set[:2] == "CH":
+                numbertest = set[2:]
+                operator = "Christians"
+            elif set[:2] == "CR":
+                numbertest = set[2:]
+                operator = "Cranbourne"
+            elif set[:2] == "MT":
+                numbertest = set[2:]
+                operator = "Martyrs"
+            elif set[0] == "S":
+                numbertest = set[1:]
+                operator = "Sunbury"
             elif set[0] == "V":
                 numbertest = set[1:]
                 operator = "Ventura"
@@ -4463,15 +4492,6 @@ async def logBus(ctx, line:str, number: str, start:str, end:str, operator:str='U
             elif set[0] == "C":
                 numbertest = set[1:]
                 operator = "CDC"
-            elif set[0] == "S":
-                numbertest = set[1:]
-                operator = "Skybus"
-            elif set[:2] == "TS":
-                numbertest = set[2:]
-                operator = "Transit Systems"
-            elif set[:2] == "MK":
-                numbertest = set[2:]
-                operator = "McKenzies"
             elif len(set) == 6:
                 operator = "platenumber"
             if operator != "platenumber":
@@ -4501,6 +4521,14 @@ async def logBus(ctx, line:str, number: str, start:str, end:str, operator:str='U
                     operator = 'CDC'
                 elif operator == 'McKenzies Tourist Service':
                     operator = 'McKenzies'
+                elif operator == 'Martyrs Bus Service':
+                    operator = 'Martyrs'
+                elif operator == 'Sunbury Bus Service':
+                    operator == 'Sunbury'
+                elif operator == 'Cranbourne Transit':
+                    operator = 'Cranbourne'
+                elif operator == 'Christians Bus Lines':
+                    operator = 'Christians'
                 with open('utils/bussets.csv','r') as bussetsFile:
                     reader = csv.reader(bussetsFile)
                     for row in reader:
