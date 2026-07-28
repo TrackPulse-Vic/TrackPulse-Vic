@@ -762,8 +762,8 @@ def completionList(user, line, summary:bool = False):
         stations = [
             "Mernda", 
             "Hawkstowe",
-            "South Morang",
             "Middle Gorge", 
+            "South Morang",
             "Epping", 
             "Lalor", 
             "Thomastown", 
@@ -787,7 +787,7 @@ def completionList(user, line, summary:bool = False):
         ]
     elif line == "Frankston":
         stations = [
-            "Frankston", "Kananook", "Seaford", "Carrum", 
+            "Frankston", "Kananook", "Seaford", "Carrum", "Bonbeach",
             "Chelsea", "Edithvale", "Aspendale", "Mordialloc", "Parkdale", 
             "Mentone", "Cheltenham", "Southland", "Highett", "Moorabbin", "Patterson", 
             "Bentleigh", "McKinnon", "Ormond", "Glen Huntly", "Caulfield", "Malvern", 
@@ -813,8 +813,8 @@ def completionList(user, line, summary:bool = False):
         ]
     elif line == "Werribee":
         stations = [
-            "Werribee", "Hoppers Crossing", "Williams Landing", "Point Cook", "Laverton", 
-            "Aircraft", "Altona", "Seaholme", "Westona", "Seaholme", 
+            "Werribee", "Hoppers Crossing", "Williams Landing",
+            "Aircraft", "Laverton", "Westona",  "Altona", "Seaholme",
             "Newport", "Spotswood", "Yarraville", "Seddon", "Footscray", "South Kensington", "North Melbourne"
         ]
     elif line == "Williamstown":
@@ -842,7 +842,6 @@ def completionList(user, line, summary:bool = False):
             "Cranbourne",
             "Merinda Park",
             "Lynbrook",
-            "Hallam",
             "Dandenong",
             "Yarraman",
             "Noble Park",
@@ -920,13 +919,13 @@ def completionList(user, line, summary:bool = False):
         ]
     elif line == "All":
         stations = [
-            "Aircraft", "Alamein", "Albion", "Alphington", "Altona", "Anstey", "Anzac", "Arden", "Ardeer", 
-            "Armadale", "Ascot Vale", "Ashburton", "Aspendale", "Auburn", "Balaclava", "Batman", "Bayswater", 
-            "Beaconsfield", "Belgrave", "Bell", "Bentleigh", "Berwick", "Bittern", "Blackburn", "Boronia", 
+            "Aircraft", "Alamein", "Albion", "Alphington", "Altona", "Anstey", "Anzac", "Arden", 
+            "Armadale", "Ascot Vale", "Ashburton", "Aspendale", "Auburn", "Balaclava", "Batman", "Baxter", "Bayswater",
+            "Beaconsfield", "Belgrave", "Bell", "Bentleigh", "Berwick", "Bittern", "Blackburn", "Bonbeach", "Boronia", 
             "Box Hill", "Brighton Beach", "Broadmeadows", "Brunswick", "Burnley", "Burwood", "Camberwell", 
-            "Canterbury", "Cardinia Road", "Carnegie", "Carrum", "Caulfield", "Chatham", "Chelsea", "Cheltenham", 
-            "Clifton Hill", "Cobblebank", "Coburg", "Collingwood", "Coolaroo", "Craigieburn", "Cranbourne", 
-            "Crib Point", "Croxton", "Croydon", "Dandenong", "Darebin", "Darling", "Deer Park", "Dennis", 
+            "Canterbury", "Cardinia Road", "Carnegie", "Carrum", "Caulfield", "Chatham", "Chelsea", "Cheltenham", "Clayton",
+            "Clifton Hill", "Coburg", "Collingwood", "Coolaroo", "Craigieburn", "Cranbourne", 
+            "Crib Point", "Croxton", "Croydon", "Dandenong", "Darebin", "Darling", "Dennis", 
             "Diamond Creek", "Diggers Rest", "Eaglemont", "East Camberwell", "East Malvern", "East Pakenham", 
             "East Richmond", "Edithvale", "Elsternwick", "Eltham", "Epping", "Essendon", "Fairfield", "Fawkner", 
             "Ferntree Gully", "Flagstaff", "Flemington Bridge", "Flemington Racecourse", "Flinders Street", 
@@ -936,14 +935,14 @@ def completionList(user, line, summary:bool = False):
             "Heidelberg", "Heyington", "Highett", "Holmesglen", "Hoppers Crossing", "Hughesdale", "Huntingdale", 
             "Hurstbridge", "Ivanhoe", "Jacana", "Jewell", "Jolimont", "Jordanville", "Kananook", "Keilor Plains", 
             "Kensington", "Keon Park", "Kooyong", "Laburnum", "Lalor", "Laverton", "Leawarra", "Lilydale", 
-            "Lynbrook", "Macaulay", "Macleod", "Malvern", "McKinnon", "Melbourne Central", "Melton", "Mentone", 
-            "Merinda Park", "Mernda", "Merri", "Middle Gorge", "Middle Footscray", "Mitcham", "Montmorency", "Moonee Ponds", "Moorabbin", 
+            "Lynbrook", "Macaulay", "Macleod", "Malvern", "McKinnon", "Melbourne Central", "Mentone", 
+            "Merinda Park", "Merylnston", "Mernda", "Merri", "Middle Brighton", "Middle Gorge", "Middle Footscray", "Mitcham", "Montmorency", "Moonee Ponds", "Moorabbin", 
             "Mooroolbark", "Morradoo", "Mount Waverley", "Mordialloc", "Moreland", "Murrumbeena", "Narre Warren", 
             "Newmarket", "Newport", "Noble Park", "North Brighton", "North Melbourne", "North Richmond", 
             "North Williamstown", "Northcote", "Nunawading", "Oak Park", "Oakleigh", "Officer", "Ormond", 
             "Pakenham", "Parkdale", "Parkville", "Parliament", "Pascoe Vale", "Patterson", "Prahran", 
             "Preston", "Regent", "Reservoir", "Richmond", "Ringwood", "Ringwood East", "Ripponlea", "Riversdale", 
-            "Rockbank", "Rosanna", "Roxburgh Park", "Royal Park", "Rushall", "Ruthven", "Sandown Park", 
+            "Rosanna", "Roxburgh Park", "Royal Park", "Rushall", "Ruthven", "Sandown Park", 
             "Sandringham", "Seaford", "Seaholme", "Seddon", "Showgrounds", "Somerville", "South Kensington", "Southland", 
             "South Morang", "South Yarra", "Southern Cross", "Spotswood", "Springvale", "St Albans", 
             "State Library", "Stony Point", "Strathmore", "Sunbury", "Sunshine", "Syndal", "Tecoma", 
@@ -964,18 +963,23 @@ def completionList(user, line, summary:bool = False):
    # Create a dictionary to count the occurrences of each item
     item_counts = {}
     for row in csv_data:
-        if row[5] in item_counts:
-            item_counts[row[5]] += 1
-        elif row[5] == "Jolimont-MCG" or row[5] == "Jolimont-Mcg":
-            item_counts["Jolimont"] += 1
+        # practically random variables for "Location 1" and "Location 2"
+        l1 = row[5]
+        l2 = row[6]
+
+        if 'jolimont' in l1.lower():
+            l1 = "Jolimont"
+        if 'jolimont' in l2.lower():
+            l2 = "Jolimont"
+
+        if l1 in item_counts:
+            item_counts[l1] += 1
         else:
-            item_counts[row[5]] = 1
-        if row[6] in item_counts:
-            item_counts[row[6]] += 1
-        elif row[6] == "Jolimont-MCG" or row[6] == "Jolimont-Mcg":
-            item_counts["Jolimont"] += 1
+            item_counts[l1] = 1
+        if l2 in item_counts:
+            item_counts[l2] += 1
         else:
-            item_counts[row[6]] = 1
+            item_counts[l2] = 1
 
     if summary == False:
         # Create a string with ticks for matching items
@@ -985,7 +989,7 @@ def completionList(user, line, summary:bool = False):
       
     # Calculate the percentage of stations that have been ticked
     # ticked_stations = [item for item in stations if item in [row[5] for row in csv_data] or item for item in stations if item in [row[6] for row in csv_data]]
-    ticked_stations = [item for item in stations if item in [row[5] for row in csv_data] or item in [row[6] for row in csv_data]]
+    ticked_stations = [item for item in stations if item in item_counts]
     percent_ticked = round(len(ticked_stations) / len(stations) * 100, 2)
 
     # Add the percentage to the end of the string
