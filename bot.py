@@ -5854,7 +5854,7 @@ async def termini(ctx):
     await maintenance_func(ctx)
     log_command(ctx.user.id, 'log-termini')
     try:
-        data =terminiList(ctx.user.name)
+        data =terminiList(ctx.user.id)
     except:
         data = 'No logs found'
     
