@@ -6005,7 +6005,7 @@ async def sets(ctx, train:str):
     app_commands.Choice(name="Sandringham",value="Sandringham"),
     app_commands.Choice(name="Alamein",value="Alamein"),
     app_commands.Choice(name="Belgrave",value="Belgrave"),
-    app_commands.Choice(name="Glen Waverly",value="Glen Waverly"),
+    app_commands.Choice(name="Glen Waverley",value="Glen Waverley"),
     app_commands.Choice(name="Lilydale",value="Lilydale"),
     app_commands.Choice(name="Flemington Racecourse",value="Flemington Racecourse"),
     app_commands.Choice(name="Metro Tunnel",value="Metro Tunnel"),
@@ -6014,7 +6014,7 @@ async def sets(ctx, train:str):
 async def sets(ctx, line:str):
     await maintenance_func(ctx)
     userid = ctx.user
-    trainLines = ["Hurstbridge", "Mernda", "Craigieburn", "Sunbury", "Upfield", "Cranbourne", "Pakenham", "Frankston", "Stony Point", "Werribee", "Williamstown", "Sandringham", "Alamein", "Lilydale", "Glen Waverly", "Belgrave", "Metro Tunnel", "City Loop", "Flemington Racecourse", "All"]
+    trainLines = ["Hurstbridge", "Mernda", "Craigieburn", "Sunbury", "Upfield", "Cranbourne", "Pakenham", "Frankston", "Stony Point", "Werribee", "Williamstown", "Sandringham", "Alamein", "Lilydale", "Glen Waverley", "Belgrave", "Metro Tunnel", "City Loop", "Flemington Racecourse", "All"]
     await ctx.response.defer()
     log_command(ctx.user.id, 'completion-lines')
 
