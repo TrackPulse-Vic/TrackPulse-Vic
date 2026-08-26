@@ -714,7 +714,7 @@ def completionList(user, line, summary:bool = False):
             "East Richmond",
             "Richmond"
         ]
-    elif line == "Glen Waverly":
+    elif line == "Glen Waverley":
         stations = [
             "Glen Waverley",
             "Syndal",
