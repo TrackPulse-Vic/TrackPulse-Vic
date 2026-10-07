@@ -103,7 +103,7 @@ station_coordinates = {
     "Tyabb": (5160 + x_offset, 9300 + y_offset, 5500 + x_offset, 9450 + y_offset),
     "Hastings": (5160 + x_offset, 9450 + y_offset, 5650 + x_offset, 9650 + y_offset),
     "Bittern": (5160 + x_offset, 9650 + y_offset, 5550 + x_offset, 9850 + y_offset),
-    "Mooradoo": (5160 + x_offset, 9850 + y_offset, 5700 + x_offset, 10050 + y_offset),
+    "Morradoo": (5160 + x_offset, 9850 + y_offset, 5700 + x_offset, 10050 + y_offset),
     "Crib Point": (5160 + x_offset, 10050 + y_offset, 5700 + x_offset, 10250 + y_offset),
     "Stony Point": (4750 + x_offset, 10400 + y_offset, 5400 + x_offset, 10550 + y_offset),
     "Carnegie": (5450 + x_offset, 4050 + y_offset, 5900 + x_offset, 4250 + y_offset),
