@@ -3648,6 +3648,19 @@ async def editrow(ctx, id:str, mode:str='train', line:str='nochange', number:str
     else:
         savedate = 'nochange'
     
+
+    # Station Codes adaptation
+    if start != 'nochange':
+        if len(start) == 3:
+            printlog("converting start from station code")
+            start = station_codes[start.upper()]
+
+    if end != 'nochange':
+            if len(end) == 3:
+                printlog("converting start from station code")
+                end = station_codes[end.upper()]
+
+
     result = editRow(userid, username, idformatted, mode,line,number,start,end,savedate,type,notes)
     
     if result == 'invalid id did not show up':
