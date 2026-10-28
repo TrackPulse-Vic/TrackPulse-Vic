@@ -1,6 +1,7 @@
 station_codes = {
     # Sunshine was the most recent station (following vicsig and sorting by name)
     
+    # ViCTORIAN STATIONS
     # Clifton Hill Station Codes
     "JLI":  "Jolimont-MCG",
     "WRM":  "West Richmond",
@@ -180,7 +181,6 @@ station_codes = {
     "WLD":  "Williams Landing",
     "HCG":  "Hoppers Crossing",
     "WER":  "Werribee",
-
     # Sunbury Station Codes
     "MFY":  "Middle Footscray",
     "WFY":  "West Footscray",
@@ -196,7 +196,6 @@ station_codes = {
     # Flemington Racecourse Station Codes
     "SGS":  "Showgrounds",
     "RCE":  "Flemington Racecourse",
-    
     # Craigieburn Station Codes
     "KEN":  "Kensington",
     "NKT":  "Newmarket",
@@ -225,19 +224,20 @@ station_codes = {
     "FAK":  "Fawkner",
     "GOW":  "Gowrie",
     "UFD":  "Upfield",
-    # Misc/VLine Station Codes
+# Misc/VLine Station Codes
     "ALY":	"Albury",
     "ART":	"Ararat",
     "ADR":	"Ardeer",
     "BMH":  "Bacchus Marsh",
     "BRD":  "Bairnsdale",
     "TNT":	"Tarneit",
-    "WPD":	"Waurn Ponds",
-    "WVL":	"Wyndham Vale",
+    "WPD":  "Waurn Ponds",
+    "WVL":  "Wyndham Vale",
     "CPS":	"Caroline Springs",
     "TLN":	"Cobblebank",
     "BNV":  "Ballan",
     "BAL":  "Ballarat",
+    "BET":  "Beaufort",
     "BNL":  "Benalla", # still open but apparently wont have any departures for a bit
     "BDG":  "Bendigo",
     "BRF":  "Broadford",
@@ -254,17 +254,23 @@ station_codes = {
     "DRO":  "Drouin",
     "EAG":  "Eaglehawk",
     "ECH":  "Echuca",
+    "EOA":  "Euroa",
+    "EPS":  "Epsom",
     "GFD":  "Garfield",
     "GLG":  "Geelong",
     "GIS":  "Gisborne",
+    "GON":  "Goornong",
     "HEV":  "Healesville",
     "HCJ":  "Heathcote Junction",
+    "HTY":  "Huntly",
     "KFT":  "Kangaroo Flat",
     "KME":  "Kilmore East",
     "KNT":  "Kyneton",
     "LAR":  "Lara",
     "LTR":  "Little River",
     "LWY":  "Longwarry",
+    "MDN":  "Macedon",
+    "MBY":  "Malmsbury",
     "MSL":  "Marshall",
     "MYB":  "Maryborough",
     "MEL":  "Melton",
@@ -274,6 +280,7 @@ station_codes = {
     "NGE":  "Nagambie",
     "NNG":  "Nar Nar Goon",
     "PYD":  "Pyramid",
+    "RCH":  "Rochester",
     "RCK":  "Riddells Creek",
     "RBK":  "Rockbank",
     "ROE":  "Rosedale",
@@ -286,12 +293,13 @@ station_codes = {
     "SWH":  "Swan Hill",
     "TBT":  "Talbot",
     "TLK":  "Tallarook",
-    "TNT":  "Tarneit",
+    "TNT":	"Tarneit",
     "TER":  "Terang",
     "TFG":  "Trafalgar",
     "TRG":  "Traralgon",
     "TYN":  "Tynong",
     "VTN":  "Violet Town",
+    "WDG":  "Wandong",
     "WAN":  "Wallan",
     "WRT":  "Wangaratta",
     "WGL":  "Warragul",
@@ -300,9 +308,9 @@ station_codes = {
     "WET":  "West Tarneit",
     "WXC":  "Winchelsea",
     "WNO":  "Woodend",
+    "WOD":  "Wodonga",
     "WVL":  "Wyndham Vale",
     "YON":  "Yarragon",
-    
     # Inner City stations With too many lines
     "FSS":	"Flinders Street",
     "SSS":	"Southern Cross",
@@ -318,10 +326,6 @@ station_codes = {
     "NME":	"North Melbourne",
     "RMD":	"Richmond",
     "FSY":  "Footscray",
-
     # Three Letter Stations
     "MOE":	"Moe",
-    
-    
-    
 }
