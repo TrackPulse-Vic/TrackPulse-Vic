@@ -3,7 +3,7 @@ import csv
 from tabnanny import check
 from datetime import datetime, timedelta
 
-def checkAchievements(user):
+def checkAchievements(user, userid):
     vline_trains = ['VLocity', 'Sprinter', 'N Class']
     metro_trains = ["X'Trapolis 100", 'EDI Comeng', 'Alstom Comeng', 'Siemens Nexas', 'HCMT']
     filepath = f"utils/trainlogger/userdata/{user}.csv"
@@ -655,7 +655,7 @@ def checkAchievements(user):
                 print(f"Maximum end stations visited in one day: {max_stations}")
     
     # Check which achievements are actually new
-    userCSV = f'utils/trainlogger/achievements/data/{user}.csv'
+    userCSV = f'utils/trainlogger/achievements/data/{userid}.csv'
     existing_achievements = {}
     
     if os.path.exists(userCSV):
