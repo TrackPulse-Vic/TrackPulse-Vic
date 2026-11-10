@@ -636,9 +636,13 @@ async def on_ready():
         MAINTENANCE_MODE = True
 
 # achievement awarder  check achievements
-async def addAchievement(username, channel, mention):
+async def addAchievement(userid, channel, mention, username):
     channel = bot.get_channel(channel)
-    new = checkAchievements(username)
+    path = f"utils/trainlogger/userdata/{userid}.csv"
+    if not os.path.exists(path):
+        new = checkAchievements(username, userid)
+    else:
+        new = checkAchievements(userid, userid)
     for achievement in new:
         info = getAchievementInfo(achievement)
         embed = discord.Embed(title='Achievement unlocked!', color=achievement_colour)
@@ -7104,7 +7108,7 @@ async def testfind(ctx):
 async def refreshachievements(ctx):
     log_command(ctx.author.id, 'refresh-achievements')
     response = await ctx.send('Checking for new Achievements...')
-    await addAchievement(ctx.author.name,ctx.channel.id, ctx.author.mention)
+    await addAchievement(ctx.author.id, ctx.channel.id, ctx.author.mention, ctx.author.name)
     new = checkGameAchievements(ctx.author.name)
     for achievement in new:
         info = getAchievementInfo(achievement)
@@ -7138,7 +7142,7 @@ async def viewAchievements(ctx, user: discord.User = None):
 
     # Get user's achievements
     user_achievements = {}  # Change to dict to store dates
-    filepath = f'utils/trainlogger/achievements/data/{user.name}.csv'
+    filepath = f'utils/trainlogger/achievements/data/{user.id}.csv'
     if os.path.exists(filepath):
         with open(filepath, 'r', newline='') as file:
             reader = csv.reader(file)
@@ -7186,7 +7190,7 @@ async def viewAchievements(ctx, user: discord.User = None):
 
     async def get_page_embed(page_num):
         embed = discord.Embed(title=f"{user.name}'s Achievements", description=f"**Progress:** {achieved}/{total_achievements} ({percentage:.1f}%)", color=achievement_colour)
-        embed.set_footer(text=f"Page {page_num + 1}/{len(pages)}")
+        embed.set_footer(text=f"Page {page_num + 1}/{len(pages)}\n'@TrackPulse Vic refreshachievements' to update")
         
         for achievement in pages[page_num]:
             achievement_id, name, description, has_achievement = achievement
