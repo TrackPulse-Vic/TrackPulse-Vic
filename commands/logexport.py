@@ -28,15 +28,23 @@ async def logExport(ctx, format:str, mode:str, hidemessage:bool=False,trainspott
             with open(filepath, 'r') as tpvfile:
                 reader = csv.reader(tpvfile)
                 tpvdata = {}
-                for row in reader:
-                    id = row[0]
-                    vehicle_num = row[1]
-                    date = row[3]
-                    line = row[4]
-                    start = row[5]
-                    end = row[6]
-                    notes = row[7]
-                    tpvdata[id] = [date, 'Train', line, start, end, vehicle_num, 'Metro Trains', '', 'VIC', notes]
+                if mode == 'train':
+                    for row in reader:
+                        type = [2]
+                        id = row[0]
+                        if type in {'VLocity','Sprinter','N Class'}:
+                            operator = "Vline"
+                        else:
+                            operator = 'Metro Trains'
+                        tpvdata[id] = [row[3], mode.capitalize(), row[4], row[5], row[6], row[1], operator, '', 'VIC', row[7]]
+                elif mode == 'bus':
+                    for row in reader:
+                        id = row[0]
+                        tpvdata[id] = [row[3], mode.capitalize(), row[4], row[5], row[6], row[1], row[7], '', 'VIC', row[8]]
+                elif mode == 'tram':
+                    for row in reader:
+                        id = row[0]
+                        tpvdata[id] = [row[3], mode.capitalize(), row[4], row[5], row[6], row[1], 'Yarra Trams', '', 'VIC', row[7]]
 
             with open('temp/trainsportter.csv', 'w') as tspfile:
                 writer = csv.writer(tspfile)
