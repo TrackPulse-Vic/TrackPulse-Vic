@@ -1,9 +1,9 @@
 import discord
 import os
-
+import csv
 from utils.xmltest import convertLogsToXML
 
-async def logExport(ctx, format:str, mode:str, hidemessage:bool=False):
+async def logExport(ctx, format:str, mode:str, hidemessage:bool=False,trainspotter:bool=False):
     username = ctx.user.name
     userid = ctx.user.id
     if mode == 'train':
@@ -24,6 +24,29 @@ async def logExport(ctx, format:str, mode:str, hidemessage:bool=False):
     
     if format == 'csv':
         file = discord.File(filepath)
+        if trainspotter == True:
+            with open(filepath, 'r') as tpvfile:
+                reader = csv.reader(tpvfile)
+                tpvdata = {}
+                for row in reader:
+                    id = row[0]
+                    vehicle_num = row[1]
+                    date = row[3]
+                    line = row[4]
+                    start = row[5]
+                    end = row[6]
+                    notes = row[7]
+                    tpvdata[id] = [date, 'Train', line, start, end, vehicle_num, 'Metro Trains', '', 'VIC', notes]
+
+            with open('temp/trainsportter.csv', 'w') as tspfile:
+                writer = csv.writer(tspfile)
+                header = ['Date', 'Mode', 'Line or route', 'From', 'To', 'Vehicle number', 'Operator', 'Direction', 'State', 'Notes']
+                writer.writerow(header)
+                for train in tpvdata:
+                    writer.writerow(tpvdata[train])
+            file = discord.File('temp/trainsportter.csv')
+        else:
+            file = discord.File(filepath)
     elif format == 'md':
         file = exportMarkdown(ctx, filepath, mode)
     elif format == 'xml':
@@ -32,6 +55,7 @@ async def logExport(ctx, format:str, mode:str, hidemessage:bool=False):
         raise ValueError(f"Unsupported format: {format}")
         
     await ctx.response.send_message(content=f'Here is your {format} file:', file=file, ephemeral=hidemessage)
+    os.remove(f'temp/trainsportter.csv') 
 
 def exportMarkdown(ctx, filepath, mode):
     # Read the CSV file
