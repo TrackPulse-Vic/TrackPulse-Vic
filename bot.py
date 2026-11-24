@@ -5592,10 +5592,10 @@ async def userLogs(ctx, mode:str='train', user: discord.User=None, id:str=None):
     app_commands.Choice(name="Adelaide Trams", value="adelaide-trams"),
     app_commands.Choice(name="Perth Trains", value="perth-trains"),
 ])
-async def export(ctx, format:str, mode:str, hidemessage:bool=False,trainsporter:bool=False):
+async def export(ctx, format:str, mode:str, hidemessage:bool=False,trainspotter:bool=False):
     await maintenance_func(ctx)
     try:
-        await logExport(ctx, format, mode, hidemessage,trainsporter)
+        await logExport(ctx, format, mode, hidemessage,trainspotter)
     except FileNotFoundError as e:
         await ctx.response.send_message(f'You have no logs for that mode!')
     except Exception as e:

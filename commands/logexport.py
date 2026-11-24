@@ -46,13 +46,13 @@ async def logExport(ctx, format:str, mode:str, hidemessage:bool=False,trainspott
                         id = row[0]
                         tpvdata[id] = [row[3], mode.capitalize(), row[4], row[5], row[6], row[1], 'Yarra Trams', '', 'VIC', row[7]]
 
-            with open('temp/trainsportter.csv', 'w') as tspfile:
+            with open('temp/trainspotter.csv', 'w') as tspfile:
                 writer = csv.writer(tspfile)
                 header = ['Date', 'Mode', 'Line or route', 'From', 'To', 'Vehicle number', 'Operator', 'Direction', 'State', 'Notes']
                 writer.writerow(header)
                 for train in tpvdata:
                     writer.writerow(tpvdata[train])
-            file = discord.File('temp/trainsportter.csv')
+            file = discord.File('temp/trainspotter.csv')
         else:
             file = discord.File(filepath)
     elif format == 'md':
